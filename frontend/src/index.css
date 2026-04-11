@@ -1,0 +1,38 @@
+@import "tailwindcss";
+@import "@fontsource/outfit";
+
+@theme {
+  --font-sans: "Outfit", system-ui, sans-serif;
+  
+  --color-brand-50: #f0fdfa;
+  --color-brand-100: #ccfbf1;
+  --color-brand-200: #99f6e4;
+  --color-brand-300: #5eead4;
+  --color-brand-400: #2dd4bf;
+  --color-brand-500: #14b8a6;
+  --color-brand-600: #0d9488;
+  --color-brand-700: #0f766e;
+  --color-brand-800: #115e59;
+  --color-brand-900: #134e4a;
+
+  --color-dark-800: #111827;
+  --color-dark-900: #030712;
+}
+
+@layer base {
+  body {
+    @apply bg-gray-50 text-gray-900 font-sans antialiased selection:bg-brand-300 selection:text-brand-900;
+  }
+}
+
+@layer utilities {
+  .glass {
+    @apply bg-white/70 backdrop-blur-md border border-white/20;
+  }
+  .glass-dark {
+    @apply bg-dark-900/60 backdrop-blur-xl border border-white/10;
+  }
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-brand-500 to-indigo-600;
+  }
+}
