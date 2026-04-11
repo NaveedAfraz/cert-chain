@@ -76,7 +76,7 @@ export default function CertificateDetails() {
     };
 
     const handleShare = async () => {
-        const url = `http://certchain.io/verify/${cert.id}`;
+        const url = `${window.location.origin}/verify/${cert.id}`;
         if (navigator.share) {
             try {
                 await navigator.share({
@@ -171,7 +171,7 @@ export default function CertificateDetails() {
                         </div>
                         <h4 className="text-white font-bold mb-2">Public Verification URL</h4>
                         <p className="text-gray-400 text-xs break-all mb-8 bg-gray-800 p-3 rounded-xl">
-                            {`http://certchain.io/verify/${cert.id}`}
+                            {`${window.location.origin}/verify/${cert.id}`}
                         </p>
                         <div className="w-full space-y-3">
                             <button 

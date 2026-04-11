@@ -176,7 +176,7 @@ export default function IssueCertificate() {
                                         </p>
                                         <div className="flex gap-3">
                                             <button 
-                                                onClick={() => { navigator.clipboard.writeText(`http://localhost:5173/verify/${lastIssuedCert.id}`); toast.success('Shareable Link Copied!'); }}
+                                                onClick={() => { navigator.clipboard.writeText(`${window.location.origin}/verify/${lastIssuedCert.id}`); toast.success('Shareable Link Copied!'); }}
                                                 className="flex-1 py-3 bg-gray-900 text-white rounded-xl text-xs font-black uppercase tracking-widest hover:bg-brand-600 transition flex items-center justify-center gap-2"
                                             >
                                                 <Globe size={14} /> Copy Link

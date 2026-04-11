@@ -41,7 +41,8 @@ const issueCertificate = async (req, res) => {
             [uuidv4(), certId, receipt.hash, receipt.blockNumber]
         );
 
-        const verificationUrl = `http://localhost:5173/verify/${certId}`;
+        const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+        const verificationUrl = `${frontendUrl}/verify/${certId}`;
         const qrCodeDataUrl = await QRCode.toDataURL(verificationUrl);
 
         res.status(201).json({ 
@@ -100,7 +101,8 @@ const getCertificateDetails = async (req, res) => {
         if (rows.length === 0) return res.status(404).json({ message: 'Not found' });
 
         const cert = rows[0];
-        const verificationUrl = `http://localhost:5173/verify/${cert.id}`;
+        const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+        const verificationUrl = `${frontendUrl}/verify/${cert.id}`;
         const qrCodeDataUrl = await QRCode.toDataURL(verificationUrl);
 
         res.json({ ...cert, qrCode: qrCodeDataUrl });
