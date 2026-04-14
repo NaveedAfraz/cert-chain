@@ -83,7 +83,7 @@ export default function Settings() {
             updateUser({ institutionName: instName });
             
             toast.success('Branding Synchronized!');
-            setInstData(prev => ({ ...prev, name: instName, logo_url: logoUrl }));
+            setInstData((prev: any) => ({ ...prev, name: instName, logo_url: logoUrl }));
         } catch (error) {
             toast.error('Update failed');
         } finally {
