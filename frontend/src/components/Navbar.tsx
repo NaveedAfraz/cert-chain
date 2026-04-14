@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import { Hexagon, LogOut, LayoutDashboard, ShieldCheck, PlusSquare, ListChecks, Settings, Globe } from 'lucide-react';
 
 export default function Navbar() {
-  const { logout, isAuthenticated, isAdmin, user } = useAuth();
+  const { logout, isAuthenticated, isAdmin, user, canManageSettings, isStaff } = useAuth();
   const location = useLocation();
 
   const isSuperAdmin = user?.isSuperAdmin;
@@ -31,7 +31,9 @@ export default function Navbar() {
               <NavLink to="/admin/dashboard" icon={<LayoutDashboard size={18} />} label="Overview" current={location.pathname} />
               <NavLink to="/admin/issue" icon={<PlusSquare size={18} />} label="Issue Cert" current={location.pathname} />
               <NavLink to="/admin/certificates" icon={<ListChecks size={18} />} label="Records" current={location.pathname} />
-              <NavLink to="/admin/settings" icon={<Settings size={18} />} label="Portal Settings" current={location.pathname} />
+              {canManageSettings && (
+                <NavLink to="/admin/settings" icon={<Settings size={18} />} label="Portal Settings" current={location.pathname} />
+              )}
             </>
           )}
 
@@ -55,8 +57,12 @@ export default function Navbar() {
           {isAuthenticated ? (
             <div className="flex items-center gap-3">
               <div className="hidden sm:flex flex-col items-end mr-2">
-                <span className="text-xs font-black text-brand-600 uppercase tracking-widest">{isAdmin ? (isSuperAdmin ? 'Platform Root' : 'College Admin') : 'Student'}</span>
-                <span className="text-sm font-bold text-gray-900 line-clamp-1">{user?.name}</span>
+                <span className="text-xs font-black text-brand-600 uppercase tracking-widest">
+                    {isSuperAdmin ? 'Platform Root' : (isStaff ? 'Campus Staff' : 'College Admin')}
+                </span>
+                <span className="text-sm font-bold text-gray-900 line-clamp-1">
+                    {(!isSuperAdmin && user?.institutionName) ? user.institutionName : user?.name}
+                </span>
               </div>
               <button 
                 onClick={logout} 

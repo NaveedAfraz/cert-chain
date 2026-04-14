@@ -78,6 +78,13 @@ const getInstitutionCertificates = async (req, res) => {
              ORDER BY c.issue_date DESC`,
             [institutionId]
         );
+
+        const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+        const QRCode = require('qrcode');
+        for (let row of rows) {
+            row.qrCode = await QRCode.toDataURL(`${frontendUrl}/verify/${row.id}`);
+        }
+
         res.json(rows);
     } catch (error) {
         res.status(500).json({ message: 'Error fetching certificates' });
@@ -142,7 +149,13 @@ const verifyCertificate = async (req, res) => {
         if (recalculatedHash !== cert.cert_hash) {
             console.log('[VERIFY] HASH MISMATCH - returning TAMPERED');
             await logVerification(certificateId, cert.institution_id, 'TAMPERED');
-            return res.status(400).json({ status: 'TAMPERED' });
+            return res.status(400).json({ 
+                status: 'TAMPERED', 
+                recalculatedHash, 
+                storedHash: cert.cert_hash,
+                issueDateType: typeof cert.issue_date,
+                issueDateValue: cert.issue_date
+            });
         }
 
         let isValidOnChain = false;

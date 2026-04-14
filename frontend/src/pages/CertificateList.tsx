@@ -123,7 +123,7 @@ export default function CertificateList() {
                                     <div className="flex flex-col">
                                         <span className="text-sm font-bold text-gray-700">{new Date(cert.issue_date).toLocaleDateString()}</span>
                                         <div className="flex items-center gap-1 text-[10px] text-gray-400 font-bold uppercase tracking-tighter">
-                                            <Hash size={10} /> {cert.tx_hash.substring(0, 10)}...
+                                            <Hash size={10} /> {cert.tx_hash ? cert.tx_hash.substring(0, 10) : 'PENDING'}...
                                         </div>
                                     </div>
                                 </td>

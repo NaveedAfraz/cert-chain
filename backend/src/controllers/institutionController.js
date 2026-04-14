@@ -122,9 +122,128 @@ const getGlobalStats = async (req, res) => {
     }
 };
 
+const bcrypt = require('bcrypt');
+const crypto = require('crypto');
+
+/**
+ * PHASE 9: Institutional Management
+ */
+
+const getMyInstitution = async (req, res) => {
+    try {
+        const institutionId = req.user.institutionId;
+        const [rows] = await db.query(
+            'SELECT id, name, slug, logo_url, is_active FROM Institutions WHERE id = ?',
+            [institutionId]
+        );
+        if (rows.length === 0) return res.status(404).json({ message: 'Institution not found' });
+        res.json(rows[0]);
+    } catch (error) {
+        res.status(500).json({ message: 'Error fetching institution profile' });
+    }
+};
+
+const updateMyInstitution = async (req, res) => {
+    try {
+        const institutionId = req.user.institutionId;
+        const { name, logoUrl } = req.body;
+
+        if (!name) return res.status(400).json({ message: 'Name is required' });
+
+        await db.query(
+            'UPDATE Institutions SET name = ?, logo_url = ? WHERE id = ?',
+            [name, logoUrl, institutionId]
+        );
+
+        res.json({ message: 'Profile updated successfully' });
+    } catch (error) {
+        res.status(500).json({ message: 'Error updating branding' });
+    }
+};
+
+const getInstitutionMembers = async (req, res) => {
+    try {
+        const institutionId = req.user.institutionId;
+        const [rows] = await db.query(
+            `SELECT u.id, u.full_name, u.email, im.role, u.created_at 
+             FROM Users u 
+             JOIN InstitutionMembers im ON u.id = im.user_id 
+             WHERE im.institution_id = ?`,
+            [institutionId]
+        );
+        res.json(rows);
+    } catch (error) {
+        res.status(500).json({ message: 'Error fetching staff records' });
+    }
+};
+
+const addInstitutionMember = async (req, res) => {
+    let conn;
+    try {
+        const institutionId = req.user.institutionId;
+        const { fullName, email, password, role } = req.body;
+
+        if (!fullName || !email || !password) {
+            return res.status(400).json({ message: 'Missing required fields' });
+        }
+
+        conn = await db.getConnection();
+        await conn.beginTransaction();
+
+        const userId = uuidv4();
+        const hash = await bcrypt.hash(password, 10);
+
+        // 1. Create User
+        await conn.query(
+            'INSERT INTO Users (id, full_name, email, password_hash) VALUES (?, ?, ?, ?)',
+            [userId, fullName, email, hash]
+        );
+
+        // 2. Link to Institution
+        await conn.query(
+            'INSERT INTO InstitutionMembers (id, user_id, institution_id, role) VALUES (?, ?, ?, ?)',
+            [uuidv4(), userId, institutionId, role || 'STAFF']
+        );
+
+        await conn.commit();
+        res.status(201).json({ message: 'Staff member added successfully' });
+    } catch (error) {
+        if (conn) await conn.rollback();
+        console.error('Add Member Error:', error);
+        res.status(500).json({ message: error.code === 'ER_DUP_ENTRY' ? 'Email already registered' : 'Error adding staff' });
+    } finally {
+        if (conn) conn.release();
+    }
+};
+
+const removeInstitutionMember = async (req, res) => {
+    try {
+        const institutionId = req.user.institutionId;
+        const { userId } = req.params;
+
+        if (userId === req.user.id) {
+            return res.status(400).json({ message: 'Cannot remove yourself' });
+        }
+
+        await db.query(
+            'DELETE FROM InstitutionMembers WHERE user_id = ? AND institution_id = ?',
+            [userId, institutionId]
+        );
+
+        res.json({ message: 'User access revoked' });
+    } catch (error) {
+        res.status(500).json({ message: 'Error removing member' });
+    }
+};
+
 module.exports = {
     addInstitution,
     getInstitutions,
     getInstitutionStats,
-    getGlobalStats
+    getGlobalStats,
+    getMyInstitution,
+    updateMyInstitution,
+    getInstitutionMembers,
+    addInstitutionMember,
+    removeInstitutionMember
 };

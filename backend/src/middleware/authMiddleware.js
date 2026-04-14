@@ -13,11 +13,19 @@ const authMiddleware = (req, res, next) => {
     }
 };
 
+const institutionMiddleware = (req, res, next) => {
+    if (req.user && (req.user.role === 'ADMIN' || req.user.role === 'STAFF' || req.user.isSuperAdmin)) {
+        next();
+    } else {
+        res.status(403).json({ message: 'Access denied: Institutional access required' });
+    }
+};
+
 const adminMiddleware = (req, res, next) => {
     if (req.user && (req.user.role === 'ADMIN' || req.user.isSuperAdmin)) {
         next();
     } else {
-        res.status(403).json({ message: 'Access denied: Admin only' });
+        res.status(403).json({ message: 'Access denied: Admin permissions required' });
     }
 };
 
@@ -29,4 +37,4 @@ const superAdminMiddleware = (req, res, next) => {
     }
 };
 
-module.exports = { authMiddleware, adminMiddleware, superAdminMiddleware };
+module.exports = { authMiddleware, institutionMiddleware, adminMiddleware, superAdminMiddleware };

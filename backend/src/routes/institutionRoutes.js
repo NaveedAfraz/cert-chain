@@ -1,12 +1,29 @@
 const express = require('express');
-const { addInstitution, getInstitutions, getInstitutionStats, getGlobalStats } = require('../controllers/institutionController');
-const { authMiddleware, adminMiddleware, superAdminMiddleware } = require('../middleware/authMiddleware');
+const { 
+    addInstitution, 
+    getInstitutions, 
+    getInstitutionStats, 
+    getGlobalStats,
+    getMyInstitution,
+    updateMyInstitution,
+    getInstitutionMembers,
+    addInstitutionMember,
+    removeInstitutionMember
+} = require('../controllers/institutionController');
+const { authMiddleware, institutionMiddleware, adminMiddleware, superAdminMiddleware } = require('../middleware/authMiddleware');
 
 const router = express.Router();
 
 router.post('/', authMiddleware, superAdminMiddleware, addInstitution);
 router.get('/', authMiddleware, superAdminMiddleware, getInstitutions);
-router.get('/stats', authMiddleware, adminMiddleware, getInstitutionStats);
+router.get('/stats', authMiddleware, institutionMiddleware, getInstitutionStats);
 router.get('/global-stats', authMiddleware, superAdminMiddleware, getGlobalStats);
+
+// Institutional Management
+router.get('/my', authMiddleware, adminMiddleware, getMyInstitution);
+router.patch('/my', authMiddleware, adminMiddleware, updateMyInstitution);
+router.get('/my/users', authMiddleware, adminMiddleware, getInstitutionMembers);
+router.post('/my/users', authMiddleware, adminMiddleware, addInstitutionMember);
+router.delete('/my/users/:userId', authMiddleware, adminMiddleware, removeInstitutionMember);
 
 module.exports = router;

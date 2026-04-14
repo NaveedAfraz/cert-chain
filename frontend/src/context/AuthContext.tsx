@@ -15,9 +15,12 @@ interface AuthContextType {
     user: User | null;
     token: string | null;
     login: (token: string, user: User) => void;
+    updateUser: (partialUser: Partial<User>) => void;
     logout: () => void;
     isAuthenticated: boolean;
     isAdmin: boolean;
+    isStaff: boolean;
+    canManageSettings: boolean;
     isSuperAdmin: boolean;
 }
 
@@ -44,6 +47,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setUser(newUser);
     };
 
+    const updateUser = (partialUser: Partial<User>) => {
+        if (!user) return;
+        const updatedUser = { ...user, ...partialUser };
+        localStorage.setItem('user', JSON.stringify(updatedUser));
+        setUser(updatedUser);
+    };
+
     const logout = () => {
         localStorage.removeItem('token');
         localStorage.removeItem('user');
@@ -51,14 +61,21 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setUser(null);
     };
 
+    const isAdmin = user?.role === 'ADMIN' || user?.isSuperAdmin === true;
+    const isStaff = user?.role === 'STAFF';
+    const canManageSettings = user?.role === 'ADMIN' || user?.isSuperAdmin === true;
+
     return (
         <AuthContext.Provider value={{
             user,
             token,
             login,
+            updateUser,
             logout,
             isAuthenticated: !!token,
-            isAdmin: user?.role === 'ADMIN' || user?.isSuperAdmin === true,
+            isAdmin: isAdmin || isStaff, // 'isAdmin' in UI often just means 'has dashboard access'
+            isStaff,
+            canManageSettings,
             isSuperAdmin: user?.isSuperAdmin === true
         }}>
             {children}
