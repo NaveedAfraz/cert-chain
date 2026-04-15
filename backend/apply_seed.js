@@ -17,15 +17,8 @@ async function runSeed() {
 
     console.log(`Connected to database ${process.env.DB_NAME}. Applying seed...`);
     
-    // First clear existing Certificates, Institutions, Users to avoid issues
-    await connection.query('SET FOREIGN_KEY_CHECKS = 0;');
-    await connection.query('TRUNCATE TABLE BlockchainTransactions;');
-    await connection.query('TRUNCATE TABLE VerificationLogs;');
-    await connection.query('TRUNCATE TABLE Certificates;');
-    await connection.query('TRUNCATE TABLE Subscriptions;');
-    await connection.query('TRUNCATE TABLE InstitutionMembers;');
+    // Append kaggle seed data
     await connection.query("DELETE FROM Users WHERE email = 'admin@certchain.com';");
-    await connection.query('TRUNCATE TABLE Institutions;');
     await connection.query('SET FOREIGN_KEY_CHECKS = 1;');
 
     const seedPath = path.join(__dirname, 'seed_data', 'seed_kaggle_data.sql');

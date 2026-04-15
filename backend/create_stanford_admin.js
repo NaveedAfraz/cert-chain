@@ -24,12 +24,12 @@ async function createInstitutionAdmin() {
     // Hash for "password" = $2b$10$f36ueu2siakzDNs2uh149.SVH/aPGqLgIFcKQb5VErfJtahlc2Y8O (Wait, this is password123, letting keep it the same)
     const hash = '$2b$10$f36ueu2siakzDNs2uh149.SVH/aPGqLgIFcKQb5VErfJtahlc2Y8O';
     
-    await conn.query("INSERT INTO Users (id, full_name, email, password_hash, is_super_admin) VALUES (?, ?, ?, ?, ?)", [
+    await conn.query("INSERT INTO Users (id, full_name, email, password_hash, role) VALUES (?, ?, ?, ?, ?)", [
       adminId,
       'Stanford Registrar',
       'stanford@certchain.com',
       hash,
-      0
+      'STUDENT'
     ]);
     
     await conn.query("INSERT INTO InstitutionMembers (id, user_id, institution_id, role) VALUES (?, ?, ?, ?)", [

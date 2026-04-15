@@ -25,10 +25,10 @@ const signupInstitution = async (req, res) => {
         const slug = institutionName.toLowerCase().replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-');
         await institutionModel.createInstitution(institutionId, institutionName, slug);
 
-        // 3. Create Admin User
+        // 3. Create Admin User with correct role
         const userId = uuidv4();
         const hashedPassword = await bcrypt.hash(password, 10);
-        await userModel.createUser(userId, fullName, email, hashedPassword, false);
+        await userModel.createUser(userId, fullName, email, hashedPassword, 'INSTITUTION_ADMIN');
 
         // 4. Assign Trial Subscription (30 days)
         const subId = uuidv4();
@@ -43,11 +43,10 @@ const signupInstitution = async (req, res) => {
         const token = jwt.sign(
             { 
                 id: userId, 
-                isSuperAdmin: false, 
                 name: fullName, 
                 email: email,
                 institutionId: institutionId,
-                role: 'ADMIN'
+                role: 'INSTITUTION_ADMIN'
             },
             process.env.JWT_SECRET,
             { expiresIn: '1d' }
@@ -60,10 +59,10 @@ const signupInstitution = async (req, res) => {
                 id: userId,
                 name: fullName,
                 email: email,
-                isSuperAdmin: false,
                 institutionId: institutionId,
                 institutionName: institutionName,
-                role: 'ADMIN'
+                institutionSlug: slug,
+                role: 'INSTITUTION_ADMIN'
             }
         });
     } catch (error) {
@@ -87,7 +86,7 @@ const register = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 10);
         const userId = uuidv4();
 
-        await userModel.createUser(userId, fullName, email, hashedPassword, false);
+        await userModel.createUser(userId, fullName, email, hashedPassword, 'STUDENT');
 
         res.status(201).json({ message: 'User registered successfully' });
     } catch (error) {
@@ -105,17 +104,17 @@ const login = async (req, res) => {
             return res.status(401).json({ message: 'Invalid credentials' });
         }
 
+        // Still fetch membership for institutionId/institutionName context
         const memberships = await membershipModel.getMembershipsByUserId(user.id);
         const firstMembership = memberships[0] || null;
 
         const token = jwt.sign(
             { 
                 id: user.id, 
-                isSuperAdmin: user.is_super_admin, 
                 name: user.full_name, 
                 email: user.email,
                 institutionId: firstMembership ? firstMembership.institution_id : null,
-                role: firstMembership ? firstMembership.role : (user.is_super_admin ? 'SUPER_ADMIN' : 'USER')
+                role: user.role  // Role now comes directly from Users table
             },
             process.env.JWT_SECRET,
             { expiresIn: '1d' }
@@ -128,10 +127,10 @@ const login = async (req, res) => {
                 id: user.id,
                 name: user.full_name,
                 email: user.email,
-                isSuperAdmin: user.is_super_admin,
+                role: user.role,
                 institutionId: firstMembership ? firstMembership.institution_id : null,
                 institutionName: firstMembership ? firstMembership.institution_name : null,
-                role: firstMembership ? firstMembership.role : (user.is_super_admin ? 'SUPER_ADMIN' : 'USER')
+                institutionSlug: firstMembership ? firstMembership.institution_slug : null
             }
         });
     } catch (error) {
@@ -143,7 +142,7 @@ const login = async (req, res) => {
 const bootstrap = async (req, res) => {
     try {
         const pass = await bcrypt.hash('admin123', 10);
-        await userModel.createUser(uuidv4(), 'System Admin', 'admin@certchain.io', pass, true);
+        await userModel.createUser(uuidv4(), 'System Admin', 'admin@certchain.io', pass, 'SUPER_ADMIN');
         res.send('Super Admin bootstrap complete.');
     } catch (e) {
         res.status(500).send(e.message);

@@ -19,6 +19,9 @@ import IssueCertificate from './pages/IssueCertificate';
 import CertificateList from './pages/CertificateList';
 import CertificateDetails from './pages/CertificateDetails';
 import Settings from './pages/Settings';
+import TamperLab from './pages/TamperLab';
+import InstitutionProfile from './pages/InstitutionProfile';
+import InstitutionDirectory from './pages/InstitutionDirectory';
 
 function App() {
   return (
@@ -44,6 +47,9 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/pricing" element={<Pricing />} />
+              <Route path="/tamper-lab" element={<TamperLab />} />
+              <Route path="/institutions" element={<InstitutionDirectory />} />
+              <Route path="/institution/:slug" element={<InstitutionProfile />} />
               
               {/* Institution Admin Routes */}
               <Route path="/admin/dashboard" element={<AdminDashboard />} />

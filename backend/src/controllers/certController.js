@@ -198,20 +198,26 @@ const verifyCertificate = async (req, res) => {
 const revokeCertificate = async (req, res) => {
     try {
         const { id } = req.params;
+        const { reason } = req.body;
         const institutionId = req.user.institutionId;
 
-        const [rows] = await db.query('SELECT cert_hash FROM Certificates WHERE id = ? AND institution_id = ?', [id, institutionId]);
+        const [rows] = await db.query('SELECT cert_hash, is_revoked FROM Certificates WHERE id = ? AND institution_id = ?', [id, institutionId]);
         if (rows.length === 0) return res.status(404).json({ message: 'Certificate not found' });
+        if (rows[0].is_revoked) return res.status(400).json({ message: 'Certificate is already revoked' });
 
         const certHash = rows[0].cert_hash;
 
         const tx = await certificateStoreContract.revokeCertificate(certHash);
         await tx.wait();
 
-        await db.query('UPDATE Certificates SET is_revoked = TRUE WHERE id = ?', [id]);
+        await db.query(
+            'UPDATE Certificates SET is_revoked = TRUE, revocation_reason = ?, revoked_at = NOW() WHERE id = ?', 
+            [reason || 'No reason provided', id]
+        );
 
-        res.json({ message: 'Certificate revoked' });
+        res.json({ message: 'Certificate revoked successfully', reason: reason || 'No reason provided' });
     } catch (error) {
+        console.error('Revocation Error:', error);
         res.status(500).json({ message: 'Revocation failed' });
     }
 };

@@ -14,21 +14,30 @@ const checkSubscriptionLimit = async (req, res, next) => {
             [institutionId]
         );
 
-        if (subs.length === 0) {
-            return res.status(403).json({ message: 'No active subscription found. Please contact support.' });
+        // Define plan limits based on unified product tiers
+        const getLimit = (planName) => {
+            if (planName === 'ENTERPRISE') return Infinity;
+            if (planName === 'PRO') return 1000;
+            if (planName === 'BASIC') return 200;
+            if (planName === 'TRIAL') return 100;
+            return 10; // FREE plan default
+        };
+
+        let planName = 'FREE';
+
+        // 2. Determine Effective Plan
+        if (subs.length > 0) {
+            const subscription = subs[0];
+            // Check Expiry - if expired, fallback to FREE instead of rejecting immediately
+            if (!subscription.expires_at || new Date() <= new Date(subscription.expires_at)) {
+                planName = subscription.plan_name;
+            }
         }
 
-        const subscription = subs[0];
+        const limit = getLimit(planName);
 
-        // 2. Check Expiry
-        if (subscription.expires_at && new Date() > new Date(subscription.expires_at)) {
-            return res.status(403).json({ message: 'Subscription expired. Please upgrade to continue issuing credentials.' });
-        }
-
-        // 3. Check Count Limits (For Trial and Basic)
-        if (subscription.plan_name === 'TRIAL' || subscription.plan_name === 'BASIC') {
-            const limit = subscription.plan_name === 'TRIAL' ? 100 : 500;
-            
+        // 3. Check Count Limits
+        if (limit !== Infinity) {
             const [counts] = await db.query(
                 'SELECT COUNT(*) as total FROM Certificates WHERE institution_id = ?',
                 [institutionId]
@@ -36,7 +45,7 @@ const checkSubscriptionLimit = async (req, res, next) => {
 
             if (counts[0].total >= limit) {
                 return res.status(403).json({ 
-                    message: `Plan limit reached (${limit} credentials). Please upgrade your subscription to the PRO tier.`,
+                    message: `Plan limit reached (${limit} credentials on ${planName} plan). Please upgrade your subscription.`,
                     limitReached: true
                 });
             }

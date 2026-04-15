@@ -14,7 +14,11 @@ const authMiddleware = (req, res, next) => {
 };
 
 const institutionMiddleware = (req, res, next) => {
-    if (req.user && (req.user.role === 'ADMIN' || req.user.role === 'STAFF' || req.user.isSuperAdmin)) {
+    if (req.user && (
+        req.user.role === 'INSTITUTION_ADMIN' || 
+        req.user.role === 'INSTITUTION_STAFF' || 
+        req.user.role === 'SUPER_ADMIN'
+    )) {
         next();
     } else {
         res.status(403).json({ message: 'Access denied: Institutional access required' });
@@ -22,7 +26,7 @@ const institutionMiddleware = (req, res, next) => {
 };
 
 const adminMiddleware = (req, res, next) => {
-    if (req.user && (req.user.role === 'ADMIN' || req.user.isSuperAdmin)) {
+    if (req.user && (req.user.role === 'INSTITUTION_ADMIN' || req.user.role === 'SUPER_ADMIN')) {
         next();
     } else {
         res.status(403).json({ message: 'Access denied: Admin permissions required' });
@@ -30,7 +34,7 @@ const adminMiddleware = (req, res, next) => {
 };
 
 const superAdminMiddleware = (req, res, next) => {
-    if (req.user && req.user.isSuperAdmin) {
+    if (req.user && req.user.role === 'SUPER_ADMIN') {
         next();
     } else {
         res.status(403).json({ message: 'Access denied: Super Admin only' });

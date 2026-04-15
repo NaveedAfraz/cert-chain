@@ -8,11 +8,17 @@ const {
     updateMyInstitution,
     getInstitutionMembers,
     addInstitutionMember,
-    removeInstitutionMember
+    removeInstitutionMember,
+    getPublicProfile,
+    getPublicDirectory
 } = require('../controllers/institutionController');
 const { authMiddleware, institutionMiddleware, adminMiddleware, superAdminMiddleware } = require('../middleware/authMiddleware');
 
 const router = express.Router();
+
+// PUBLIC (no auth)
+router.get('/directory', getPublicDirectory);
+router.get('/profile/:slug', getPublicProfile);
 
 router.post('/', authMiddleware, superAdminMiddleware, addInstitution);
 router.get('/', authMiddleware, superAdminMiddleware, getInstitutions);

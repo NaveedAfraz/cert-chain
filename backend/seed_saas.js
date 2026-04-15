@@ -18,24 +18,24 @@ async function seed() {
         // 2. Create a Super Admin (Platform Owner)
         const superAdminId = uuidv4();
         const superPass = await bcrypt.hash('admin123', 10);
-        await db.query('INSERT INTO Users (id, full_name, email, password_hash, is_super_admin) VALUES (?, ?, ?, ?, ?)', [
+        await db.query('INSERT INTO Users (id, full_name, email, password_hash, role) VALUES (?, ?, ?, ?, ?)', [
             superAdminId,
             'System Super Admin',
             'admin@certchain.io',
             superPass,
-            true
+            'SUPER_ADMIN'
         ]);
         console.log('✓ Super Admin created (admin@certchain.io / admin123).');
 
         // 3. Create a User for the College Admin
         const collegeAdminUserId = uuidv4();
         const collegePass = await bcrypt.hash('college123', 10);
-        await db.query('INSERT INTO Users (id, full_name, email, password_hash, is_super_admin) VALUES (?, ?, ?, ?, ?)', [
+        await db.query('INSERT INTO Users (id, full_name, email, password_hash, role) VALUES (?, ?, ?, ?, ?)', [
             collegeAdminUserId,
             'Dr. Jane Smith',
             'jane@global.edu',
             collegePass,
-            false
+            'INSTITUTION_ADMIN'
         ]);
         console.log('✓ User "Dr. Jane Smith" created.');
 

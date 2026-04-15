@@ -2,9 +2,11 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../services/api';
 import toast from 'react-hot-toast';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
     Search, Filter, Eye, ShieldAlert, CheckCircle2,
-    AlertCircle, FileText, Download, Hash
+    AlertCircle, FileText, Download, Hash, Ban, X,
+    ListChecks
 } from 'lucide-react';
 
 export default function CertificateList() {
@@ -12,6 +14,9 @@ export default function CertificateList() {
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
     const [statusFilter, setStatusFilter] = useState<'ALL' | 'ACTIVE' | 'REVOKED'>('ALL');
+    const [revokeTarget, setRevokeTarget] = useState<any>(null);
+    const [revokeReason, setRevokeReason] = useState('');
+    const [revoking, setRevoking] = useState(false);
 
     useEffect(() => {
         fetchCertificates();
@@ -25,6 +30,22 @@ export default function CertificateList() {
             toast.error('Failed to load certificate records');
         } finally {
             setLoading(false);
+        }
+    };
+
+    const handleRevoke = async () => {
+        if (!revokeTarget) return;
+        setRevoking(true);
+        try {
+            await api.post(`/certificates/revoke/${revokeTarget.id}`, { reason: revokeReason });
+            toast.success(`Certificate revoked: ${revokeTarget.student_name}`);
+            setRevokeTarget(null);
+            setRevokeReason('');
+            fetchCertificates(); // refresh
+        } catch (error: any) {
+            toast.error(error.response?.data?.message || 'Revocation failed');
+        } finally {
+            setRevoking(false);
         }
     };
 
@@ -54,17 +75,19 @@ export default function CertificateList() {
                     <h1 className="text-4xl font-black text-gray-900 tracking-tight">Governance Vault</h1>
                     <p className="text-gray-500 font-medium">Manage and audit institutional credentials secured on the public ledger.</p>
                 </div>
-                <div className="flex items-center gap-4">
-                    <div className="bg-white border border-gray-200 px-4 py-2 rounded-2xl flex items-center gap-3">
-                        <FileText className="text-brand-500" size={20} />
-                        <div>
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 w-full md:w-auto">
+                    <div className="flex items-center gap-4 bg-white px-6 py-4 rounded-2xl shadow-sm border border-gray-100 flex-1 sm:flex-none">
+                        <div className="p-2 bg-brand-50 text-brand-600 rounded-xl shrink-0">
+                            <ListChecks size={20} />
+                        </div>
+                        <div className="flex-1 sm:w-auto text-center sm:text-left">
                             <p className="text-[10px] font-black uppercase text-gray-400">Total Count</p>
                             <p className="font-bold text-gray-800 leading-none">{certs.length}</p>
                         </div>
                     </div>
                     <Link
                         to="/admin/issue"
-                        className="bg-gray-900 text-white px-6 py-4 rounded-2xl font-bold flex items-center gap-2 hover:bg-brand-600 transition shadow-xl shadow-gray-200"
+                        className="bg-gray-900 text-white px-6 py-4 rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-brand-600 transition shadow-xl shadow-gray-200 flex-1 sm:flex-none shrink-0"
                     >
                         Issue Certificate
                     </Link>
@@ -92,8 +115,9 @@ export default function CertificateList() {
 
             {/* Table */}
             <div className="bg-white rounded-[2.5rem] border border-gray-200 shadow-sm overflow-hidden">
-                <table className="w-full text-left border-collapse">
-                    <thead>
+                <div className="overflow-x-auto">
+                    <table className="w-full text-left border-collapse min-w-[800px]">
+                        <thead>
                         <tr className="bg-gray-50/50">
                             <th className="px-8 py-5 text-xs font-black text-gray-400 uppercase tracking-widest">Graduate Details</th>
                             <th className="px-8 py-5 text-xs font-black text-gray-400 uppercase tracking-widest">Program</th>
@@ -166,12 +190,22 @@ export default function CertificateList() {
                                         >
                                             <Download size={18} />
                                         </button>
+                                        {!cert.is_revoked && (
+                                            <button
+                                                onClick={() => setRevokeTarget(cert)}
+                                                className="p-2.5 bg-white text-gray-400 hover:text-rose-600 hover:bg-rose-50 rounded-xl border border-gray-100 transition shadow-sm"
+                                                title="Revoke Certificate"
+                                            >
+                                                <Ban size={18} />
+                                            </button>
+                                        )}
                                     </div>
                                 </td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
+                </div>
 
                 {filteredCerts.length === 0 && (
                     <div className="py-20 text-center flex flex-col items-center gap-4">
@@ -185,6 +219,70 @@ export default function CertificateList() {
                     </div>
                 )}
             </div>
+
+            {/* Revocation Modal */}
+            <AnimatePresence>
+            {revokeTarget && (
+                <motion.div 
+                    initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                    className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm px-4"
+                    onClick={() => setRevokeTarget(null)}
+                >
+                    <motion.div 
+                        initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }}
+                        className="bg-white rounded-3xl shadow-2xl max-w-md w-full p-8 space-y-6"
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-3">
+                                <div className="p-3 bg-rose-50 rounded-2xl">
+                                    <ShieldAlert size={24} className="text-rose-600" />
+                                </div>
+                                <div>
+                                    <h3 className="text-lg font-black text-gray-900">Revoke Certificate</h3>
+                                    <p className="text-xs text-gray-400 font-medium">This action is permanent on the blockchain</p>
+                                </div>
+                            </div>
+                            <button onClick={() => setRevokeTarget(null)} className="p-2 hover:bg-gray-100 rounded-xl transition">
+                                <X size={20} className="text-gray-400" />
+                            </button>
+                        </div>
+                        
+                        <div className="bg-gray-50 rounded-2xl p-4 space-y-1">
+                            <p className="text-sm font-bold text-gray-900">{revokeTarget.student_name}</p>
+                            <p className="text-xs text-gray-500">{revokeTarget.course_name}</p>
+                            <p className="text-xs font-mono text-gray-400">{revokeTarget.id}</p>
+                        </div>
+
+                        <div>
+                            <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-2 block">Revocation Reason</label>
+                            <textarea
+                                value={revokeReason}
+                                onChange={(e) => setRevokeReason(e.target.value)}
+                                placeholder="e.g., Academic misconduct, Duplicate issuance, Data entry error..."
+                                className="w-full px-4 py-3 border-2 border-gray-200 rounded-2xl focus:border-rose-400 focus:outline-none transition text-sm font-medium resize-none h-24"
+                            />
+                        </div>
+
+                        <div className="flex gap-3">
+                            <button 
+                                onClick={() => setRevokeTarget(null)} 
+                                className="flex-1 py-3 bg-gray-100 text-gray-700 rounded-2xl font-bold text-sm hover:bg-gray-200 transition"
+                            >
+                                Cancel
+                            </button>
+                            <button 
+                                onClick={handleRevoke} 
+                                disabled={revoking}
+                                className="flex-1 py-3 bg-rose-600 text-white rounded-2xl font-bold text-sm hover:bg-rose-700 transition disabled:opacity-50 flex items-center justify-center gap-2"
+                            >
+                                <Ban size={16} /> {revoking ? 'Revoking...' : 'Revoke on Chain'}
+                            </button>
+                        </div>
+                    </motion.div>
+                </motion.div>
+            )}
+            </AnimatePresence>
         </div>
     );
 }

@@ -66,11 +66,66 @@ const getInstitutionStats = async (req, res) => {
             [institutionId]
         );
 
+        // 5. Monthly certificate issuance (last 12 months)
+        const [monthlyData] = await db.query(
+            `SELECT 
+                DATE_FORMAT(issue_date, '%Y-%m') as month,
+                COUNT(*) as count
+             FROM Certificates 
+             WHERE institution_id = ? AND issue_date >= DATE_SUB(NOW(), INTERVAL 12 MONTH)
+             GROUP BY DATE_FORMAT(issue_date, '%Y-%m')
+             ORDER BY month ASC`,
+            [institutionId]
+        );
+
+        // 6. Top courses by certificate count
+        const [topCourses] = await db.query(
+            `SELECT course_name, COUNT(*) as count 
+             FROM Certificates 
+             WHERE institution_id = ? 
+             GROUP BY course_name 
+             ORDER BY count DESC LIMIT 5`,
+            [institutionId]
+        );
+
+        // 7. Verification results breakdown
+        const [verificationBreakdown] = await db.query(
+            `SELECT v.result, COUNT(*) as count 
+             FROM VerificationLogs v
+             JOIN Certificates c ON v.certificate_id = c.id
+             WHERE c.institution_id = ? 
+             GROUP BY v.result`,
+            [institutionId]
+        );
+
+        // 8. Recent activity (last 10 events)
+        const [recentActivity] = await db.query(
+            `(SELECT 'ISSUED' as type, c.student_name as detail, c.course_name as extra, c.issue_date as timestamp 
+              FROM Certificates c WHERE c.institution_id = ? ORDER BY c.issue_date DESC LIMIT 5)
+             UNION ALL
+             (SELECT 'VERIFIED' as type, c.student_name as detail, v.result as extra, v.verified_at as timestamp 
+              FROM VerificationLogs v JOIN Certificates c ON v.certificate_id = c.id 
+              WHERE c.institution_id = ? ORDER BY v.verified_at DESC LIMIT 5)
+             ORDER BY timestamp DESC LIMIT 10`,
+            [institutionId, institutionId]
+        );
+
+        // 9. Revoked count
+        const [revokedCount] = await db.query(
+            'SELECT COUNT(*) as total FROM Certificates WHERE institution_id = ? AND is_revoked = TRUE',
+            [institutionId]
+        );
+
         res.json({
             institutionName: instInfo[0]?.name || 'Unknown',
             totalCertificates: certCount[0].total,
             totalVerifications: verifyCount[0].total,
-            subscription: subInfo[0] || { plan_name: 'NONE', expires_at: null }
+            totalRevoked: revokedCount[0].total,
+            subscription: subInfo[0] || { plan_name: 'NONE', expires_at: null },
+            monthlyData,
+            topCourses,
+            verificationBreakdown,
+            recentActivity
         });
     } catch (error) {
         console.error('Stats error:', error);
@@ -236,6 +291,101 @@ const removeInstitutionMember = async (req, res) => {
     }
 };
 
+/**
+ * PUBLIC: Institution Profile by slug
+ * No auth required — returns safe public stats
+ */
+const getPublicProfile = async (req, res) => {
+    try {
+        const { slug } = req.params;
+
+        // Get institution info
+        const [instRows] = await db.query(
+            'SELECT id, name, slug, logo_url, created_at FROM Institutions WHERE slug = ? AND is_active = TRUE',
+            [slug]
+        );
+
+        if (!instRows || instRows.length === 0) {
+            return res.status(404).json({ message: 'Institution not found' });
+        }
+
+        const inst = instRows[0];
+
+        // Total certificates issued
+        const [[certCount]] = await db.query(
+            'SELECT COUNT(*) as total FROM Certificates WHERE institution_id = ? AND is_revoked = FALSE',
+            [inst.id]
+        );
+
+        // Total verifications
+        const [[verifyCount]] = await db.query(
+            'SELECT COUNT(*) as total FROM VerificationLogs WHERE institution_id = ?',
+            [inst.id]
+        );
+
+        // Top courses
+        const [topCourses] = await db.query(
+            `SELECT course_name, COUNT(*) as count 
+             FROM Certificates WHERE institution_id = ? AND is_revoked = FALSE
+             GROUP BY course_name ORDER BY count DESC LIMIT 5`,
+            [inst.id]
+        );
+
+        // Monthly issuance (last 6 months)
+        const [monthlyData] = await db.query(
+            `SELECT DATE_FORMAT(issue_date, '%Y-%m') as month, COUNT(*) as count
+             FROM Certificates WHERE institution_id = ?
+             GROUP BY month ORDER BY month DESC LIMIT 6`,
+            [inst.id]
+        );
+
+        // Staff count
+        const [[staffCount]] = await db.query(
+            'SELECT COUNT(*) as total FROM InstitutionMembers WHERE institution_id = ?',
+            [inst.id]
+        );
+
+        res.json({
+            institution: {
+                name: inst.name,
+                slug: inst.slug,
+                logo_url: inst.logo_url,
+                founded: inst.created_at,
+            },
+            stats: {
+                totalCertificates: certCount.total,
+                totalVerifications: verifyCount.total,
+                totalStaff: staffCount.total,
+                topCourses,
+                monthlyData: monthlyData.reverse(),
+            }
+        });
+    } catch (error) {
+        console.error('Error fetching public profile:', error);
+        res.status(500).json({ message: 'Server error' });
+    }
+};
+/**
+ * PUBLIC: List all active institutions with cert counts
+ */
+const getPublicDirectory = async (req, res) => {
+    try {
+        const [rows] = await db.query(
+            `SELECT i.name, i.slug, i.logo_url, i.created_at,
+                    (SELECT COUNT(*) FROM Certificates c WHERE c.institution_id = i.id AND c.is_revoked = FALSE) as cert_count,
+                    (SELECT COUNT(*) FROM VerificationLogs v WHERE v.institution_id = i.id) as verify_count
+             FROM Institutions i
+             WHERE i.is_active = TRUE
+             ORDER BY cert_count DESC`
+        );  
+        console.log(rows);
+        res.json(rows);
+    } catch (error) {
+        console.error('Error fetching public directory:', error);
+        res.status(500).json({ message: 'Server error' });
+    }
+};
+
 module.exports = {
     addInstitution,
     getInstitutions,
@@ -245,5 +395,7 @@ module.exports = {
     updateMyInstitution,
     getInstitutionMembers,
     addInstitutionMember,
-    removeInstitutionMember
+    removeInstitutionMember,
+    getPublicProfile,
+    getPublicDirectory
 };

@@ -5,10 +5,10 @@ interface User {
     id: string;
     name: string;
     email: string;
-    role: 'ADMIN' | 'STAFF' | 'USER';
-    isSuperAdmin: boolean;
+    role: 'STUDENT' | 'INSTITUTION_ADMIN' | 'INSTITUTION_STAFF' | 'SUPER_ADMIN';
     institutionId?: string;
     institutionName?: string;
+    institutionSlug?: string;
 }
 
 interface AuthContextType {
@@ -61,9 +61,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setUser(null);
     };
 
-    const isAdmin = user?.role === 'ADMIN' || user?.isSuperAdmin === true;
-    const isStaff = user?.role === 'STAFF';
-    const canManageSettings = user?.role === 'ADMIN' || user?.isSuperAdmin === true;
+    const isAdmin = user?.role === 'INSTITUTION_ADMIN' || user?.role === 'SUPER_ADMIN';
+    const isStaff = user?.role === 'INSTITUTION_STAFF';
+    const canManageSettings = user?.role === 'INSTITUTION_ADMIN' || user?.role === 'SUPER_ADMIN';
 
     return (
         <AuthContext.Provider value={{
@@ -76,7 +76,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             isAdmin: isAdmin || isStaff, // 'isAdmin' in UI often just means 'has dashboard access'
             isStaff,
             canManageSettings,
-            isSuperAdmin: user?.isSuperAdmin === true
+            isSuperAdmin: user?.role === 'SUPER_ADMIN'
         }}>
             {children}
         </AuthContext.Provider>

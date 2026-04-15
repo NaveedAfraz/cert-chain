@@ -22,9 +22,9 @@ export default function Login() {
             login(res.data.token, res.data.user);
             toast.success('Welcome back!');
             
-            if (res.data.user.role === 'ADMIN' || res.data.user.role === 'STAFF') {
+            if (res.data.user.role === 'INSTITUTION_ADMIN' || res.data.user.role === 'INSTITUTION_STAFF') {
                 navigate('/admin/dashboard');
-            } else if (res.data.user.isSuperAdmin) {
+            } else if (res.data.user.role === 'SUPER_ADMIN') {
                 navigate('/super-admin/dashboard');
             } else {
                 navigate('/student/dashboard');

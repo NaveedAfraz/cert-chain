@@ -58,23 +58,23 @@ export default function SuperAdminDashboard() {
     );
 
     return (
-        <div className="max-w-7xl mx-auto px-6 py-10 space-y-10">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 py-8 md:py-10 space-y-8 md:space-y-10">
             {/* Header */}
-            <header className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <header className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
-                    <h1 className="text-4xl font-black text-gray-900 tracking-tight">Platform Overview</h1>
-                    <p className="text-gray-500 font-medium">Real-time global metrics for CertChain SaaS</p>
+                    <h1 className="text-2xl md:text-4xl font-black text-gray-900 tracking-tight">Platform Overview</h1>
+                    <p className="text-gray-500 font-medium text-sm md:text-base">Real-time global metrics for CertChain SaaS</p>
                 </div>
                 <button 
                     onClick={() => setShowOnboard(true)}
-                    className="bg-gray-900 text-white px-6 py-4 rounded-2xl font-bold flex items-center gap-2 hover:bg-brand-600 transition shadow-xl shadow-gray-200"
+                    className="bg-gray-900 text-white px-5 py-3 md:px-6 md:py-4 rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-brand-600 transition shadow-xl shadow-gray-200 text-sm md:text-base"
                 >
-                    <Plus size={20} /> Register Institution
+                    <Plus size={18} /> Register Institution
                 </button>
             </header>
 
             {/* Global Stats Grid */}
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
                 <StatCard 
                     icon={<Building size={24} />} 
                     label="Active Tenants" 
@@ -105,23 +105,23 @@ export default function SuperAdminDashboard() {
                 />
             </div>
 
-            <div className="grid lg:grid-cols-3 gap-10">
+            <div className="grid lg:grid-cols-3 gap-6 md:gap-10">
                 {/* Active Institutions List */}
                 <div className="lg:col-span-2 space-y-6">
-                    <div className="bg-white rounded-[2.5rem] border border-gray-100 shadow-sm overflow-hidden">
-                        <div className="p-8 border-b border-gray-50 flex items-center justify-between">
-                            <h3 className="font-bold text-gray-900 text-xl">Manage Institutions</h3>
-                            <div className="relative">
+                    <div className="bg-white rounded-[2rem] md:rounded-[2.5rem] border border-gray-100 shadow-sm overflow-hidden">
+                        <div className="p-5 md:p-8 border-b border-gray-50 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                            <h3 className="font-bold text-gray-900 text-lg md:text-xl">Manage Institutions</h3>
+                            <div className="relative w-full sm:w-auto">
                                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={16} />
                                 <input 
                                     placeholder="Filter by name..." 
-                                    className="pl-10 pr-4 py-2 bg-gray-50 border-0 rounded-xl text-sm outline-none focus:ring-2 focus:ring-brand-500"
+                                    className="w-full sm:w-auto pl-10 pr-4 py-2 bg-gray-50 border-0 rounded-xl text-sm outline-none focus:ring-2 focus:ring-brand-500"
                                 />
                             </div>
                         </div>
                         <div className="divide-y divide-gray-50">
                             {institutions.map((inst) => (
-                                <div key={inst.id} className="p-6 hover:bg-gray-50 transition flex items-center justify-between">
+                                <div key={inst.id} className="p-4 md:p-6 hover:bg-gray-50 transition flex items-center justify-between">
                                     <div className="flex items-center gap-4">
                                         <div className="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center font-bold text-gray-400">
                                             {inst.name[0]}
@@ -146,7 +146,7 @@ export default function SuperAdminDashboard() {
 
                 {/* Platform Leaderboard */}
                 <div className="space-y-6">
-                    <div className="bg-gray-900 rounded-[2.5rem] p-8 text-white">
+                    <div className="bg-gray-900 rounded-[2rem] md:rounded-[2.5rem] p-6 md:p-8 text-white">
                         <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
                             <TrendingUp size={20} className="text-brand-400" /> Top Issuers
                         </h3>
@@ -165,7 +165,7 @@ export default function SuperAdminDashboard() {
                         </div>
                     </div>
 
-                    <div className="bg-indigo-600 rounded-[2.5rem] p-8 text-white relative overflow-hidden group">
+                    <div className="bg-indigo-600 rounded-[2rem] md:rounded-[2.5rem] p-6 md:p-8 text-white relative overflow-hidden group">
                         <div className="relative z-10">
                             <h3 className="text-xl font-bold mb-2 flex items-center gap-2">
                                 <ShieldCheck size={20} /> Integrity Health
@@ -197,7 +197,7 @@ export default function SuperAdminDashboard() {
             {/* Onboarding Modal */}
             <AnimatePresence>
                 {showOnboard && (
-                    <div className="fixed inset-0 z-[100] flex items-center justify-center px-6">
+                    <div className="fixed inset-0 z-[100] flex items-center justify-center px-4 md:px-6">
                         <motion.div 
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
@@ -260,13 +260,13 @@ export default function SuperAdminDashboard() {
 
 function StatCard({ icon, label, value, color, bg }: { icon: any, label: string, value: any, color: string, bg: string }) {
     return (
-        <div className="bg-white p-6 rounded-[2rem] border border-gray-100 flex items-center gap-5 shadow-sm">
-            <div className={`p-4 ${bg} ${color} rounded-2xl`}>
+        <div className="bg-white p-4 md:p-6 rounded-2xl md:rounded-[2rem] border border-gray-100 flex items-center gap-3 md:gap-5 shadow-sm">
+            <div className={`p-3 md:p-4 ${bg} ${color} rounded-xl md:rounded-2xl shrink-0`}>
                 {icon}
             </div>
-            <div>
-                <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">{label}</p>
-                <p className={`text-2xl font-black ${color}`}>{value || 0}</p>
+            <div className="min-w-0">
+                <p className="text-[10px] md:text-xs font-bold text-gray-400 uppercase tracking-widest truncate">{label}</p>
+                <p className={`text-xl md:text-2xl font-black ${color}`}>{value || 0}</p>
             </div>
         </div>
     );
