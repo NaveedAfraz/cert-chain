@@ -6,8 +6,10 @@ import {
     Loader2, Globe, Calendar
 } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 export default function InstitutionDirectory() {
+    const { t } = useTranslation();
     const [institutions, setInstitutions] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
     const [search, setSearch] = useState('');
@@ -46,13 +48,13 @@ export default function InstitutionDirectory() {
             <div className="text-center space-y-4">
                 <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
                     <div className="inline-flex items-center gap-2 px-4 py-2 bg-brand-50 text-brand-600 rounded-full text-xs font-black uppercase tracking-widest mb-4">
-                        <Globe size={14} /> Verified Network
+                        <Globe size={14} /> {t('directory.network')}
                     </div>
                     <h1 className="text-3xl md:text-5xl font-black text-gray-900 tracking-tight">
-                        Institution Directory
+                        {t('directory.title')}
                     </h1>
                     <p className="text-gray-500 font-medium max-w-xl mx-auto">
-                        Explore verified institutions issuing tamper-proof credentials on the CertChain blockchain protocol.
+                        {t('directory.subtitle')}
                     </p>
                 </motion.div>
             </div>
@@ -63,7 +65,7 @@ export default function InstitutionDirectory() {
                     <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
                     <input
                         className="w-full pl-14 pr-6 py-4 bg-white border-2 border-gray-100 rounded-2xl focus:border-brand-400 focus:outline-none font-medium text-gray-900 shadow-sm"
-                        placeholder="Search institutions..."
+                        placeholder={t('directory.searchPlaceholder')}
                         value={search}
                         onChange={(e) => setSearch(e.target.value)}
                     />
@@ -72,9 +74,9 @@ export default function InstitutionDirectory() {
 
             {/* Stats Bar */}
             <div className="flex items-center justify-center gap-6 text-sm">
-                <span className="text-gray-400 font-bold">{institutions.length} Verified Institutions</span>
+                <span className="text-gray-400 font-bold">{institutions.length} {t('directory.verifiedInstitutions')}</span>
                 <span className="text-gray-200">•</span>
-                <span className="text-gray-400 font-bold">{institutions.reduce((a: number, i: any) => a + (i.cert_count || 0), 0)} Total Certificates</span>
+                <span className="text-gray-400 font-bold">{institutions.reduce((a: number, i: any) => a + (i.cert_count || 0), 0)} {t('directory.totalCertificates')}</span>
             </div>
 
             {/* Grid */}
@@ -135,7 +137,7 @@ export default function InstitutionDirectory() {
             {filtered.length === 0 && (
                 <div className="text-center py-20 space-y-3">
                     <Building2 size={40} className="text-gray-200 mx-auto" />
-                    <p className="text-gray-400 font-bold">No institutions match your search</p>
+                    <p className="text-gray-400 font-bold">{t('directory.noResults')}</p>
                 </div>
             )}
         </div>

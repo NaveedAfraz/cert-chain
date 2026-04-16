@@ -161,6 +161,12 @@ const getGlobalStats = async (req, res) => {
             LIMIT 5
         `);
 
+        // 4. Platform-wide Staff Count
+        const [staffCount] = await db.query('SELECT COUNT(*) as total FROM InstitutionMembers');
+
+        // 5. Platform-wide API Keys
+        const [apiKeyCount] = await db.query('SELECT COUNT(*) as total FROM ApiKeys');
+
         res.json({
             totalInstitutions: instCount[0].total,
             totalCertificates: certCount[0].total,
@@ -169,7 +175,9 @@ const getGlobalStats = async (req, res) => {
                 success: logStats[0].success || 0,
                 tampered: logStats[0].tampered || 0
             },
-            topInstitutions
+            topInstitutions,
+            totalStaff: staffCount[0].total,
+            totalApiKeys: apiKeyCount[0].total
         });
     } catch (error) {
         console.error('Global Stats error:', error);

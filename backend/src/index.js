@@ -5,6 +5,7 @@ require('dotenv').config();
 const authRoutes = require('./routes/authRoutes');
 const certRoutes = require('./routes/certRoutes');
 const institutionRoutes = require('./routes/institutionRoutes');
+const apiKeyRoutes = require('./routes/apiKeyRoutes');
 
 const app = express();
 
@@ -16,6 +17,7 @@ app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use('/api/certificates', certRoutes);
 app.use('/api/institutions', institutionRoutes);
+app.use('/api/keys', apiKeyRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {

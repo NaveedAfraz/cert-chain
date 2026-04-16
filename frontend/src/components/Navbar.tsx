@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Hexagon, LogOut, LayoutDashboard, ShieldCheck, PlusSquare, ListChecks, Settings, Globe, ChevronDown, User as UserIcon, Menu, X, Building2 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export default function Navbar() {
   const { logout, isAuthenticated, isAdmin, user, canManageSettings, isStaff } = useAuth();
@@ -11,6 +12,7 @@ export default function Navbar() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const { t, i18n } = useTranslation();
 
   const isSuperAdmin = user?.role === 'SUPER_ADMIN';
 
@@ -65,37 +67,47 @@ export default function Navbar() {
         <div className="hidden lg:flex items-center gap-2">
           {isAuthenticated && isAdmin && !isSuperAdmin && (
             <>
-              <NavLink to="/admin/dashboard" icon={<LayoutDashboard size={18} />} label="Overview" current={location.pathname} />
-              <NavLink to="/admin/issue" icon={<PlusSquare size={18} />} label="Issue Cert" current={location.pathname} />
-              <NavLink to="/admin/certificates" icon={<ListChecks size={18} />} label="Records" current={location.pathname} />
+              <NavLink to="/admin/dashboard" icon={<LayoutDashboard size={18} />} label={t('nav.overview')} current={location.pathname} />
+              <NavLink to="/admin/issue" icon={<PlusSquare size={18} />} label={t('nav.issueCert')} current={location.pathname} />
+              <NavLink to="/admin/certificates" icon={<ListChecks size={18} />} label={t('nav.records')} current={location.pathname} />
               {canManageSettings && (
-                <NavLink to="/admin/settings" icon={<Settings size={18} />} label="Portal Settings" current={location.pathname} />
+                <NavLink to="/admin/settings" icon={<Settings size={18} />} label={t('nav.portalSettings')} current={location.pathname} />
               )}
               {user?.institutionSlug && (
-                <NavLink to={`/institution/${user.institutionSlug}`} icon={<Building2 size={18} />} label="Public Profile" current={location.pathname} />
+                <NavLink to={`/institution/${user.institutionSlug}`} icon={<Building2 size={18} />} label={t('nav.publicProfile')} current={location.pathname} />
               )}
             </>
           )}
 
           {isAuthenticated && isSuperAdmin && (
             <>
-              <NavLink to="/super-admin/dashboard" icon={<Globe size={18} />} label="Platform Central" current={location.pathname} />
+              <NavLink to="/super-admin/dashboard" icon={<Globe size={18} />} label={t('nav.platformCentral')} current={location.pathname} />
             </>
           )}
 
           {!isAuthenticated && (
             <>
-              <NavLink to="/" label="Home" current={location.pathname} />
-              <NavLink to="/institutions" label="Institutions" current={location.pathname} />
-              <NavLink to="/verify" label="Public Verifier" current={location.pathname} />
-              <NavLink to="/tamper-lab" label="Tamper Lab" current={location.pathname} />
-              <NavLink to="/pricing" label="SaaS Pricing" current={location.pathname} />
+              <NavLink to="/" label={t('nav.home')} current={location.pathname} />
+              <NavLink to="/institutions" label={t('nav.institutions')} current={location.pathname} />
+              <NavLink to="/verify" label={t('nav.publicVerifier')} current={location.pathname} />
+              <NavLink to="/tamper-lab" label={t('nav.tamperLab')} current={location.pathname} />
+              <NavLink to="/pricing" label={t('nav.pricing')} current={location.pathname} />
             </>
           )}
         </div>
 
         {/* Global Actions */}
         <div className="flex items-center gap-4">
+          <select 
+            className="bg-transparent text-sm font-bold text-gray-500 hover:text-gray-900 focus:outline-none cursor-pointer"
+            value={i18n.language}
+            onChange={(e) => i18n.changeLanguage(e.target.value)}
+          >
+            <option value="en">EN</option>
+            <option value="es">ES</option>
+            <option value="fr">FR</option>
+          </select>
+
           {isAuthenticated ? (
             <div className="relative" ref={dropdownRef}>
               <button 
@@ -135,13 +147,13 @@ export default function Navbar() {
                         onClick={() => setDropdownOpen(false)}
                         className="flex items-center gap-3 px-4 py-3 text-sm font-bold text-gray-700 hover:bg-brand-50 hover:text-brand-600 rounded-xl transition-colors"
                       >
-                        <LayoutDashboard size={18} /> My Dashboard
+                        <LayoutDashboard size={18} /> {t('nav.myDashboard')}
                       </Link>
                       <button 
                         onClick={handleLogout}
                         className="w-full flex items-center gap-3 px-4 py-3 text-sm font-bold text-rose-600 hover:bg-rose-50 rounded-xl transition-colors text-left"
                       >
-                        <LogOut size={18} /> Sign Out securely
+                        <LogOut size={18} /> {t('nav.signOut')}
                       </button>
                     </div>
                   </motion.div>
@@ -150,12 +162,12 @@ export default function Navbar() {
             </div>
           ) : (
             <div className="hidden sm:flex items-center gap-3">
-               <Link to="/login" className="text-sm font-bold text-gray-600 hover:text-brand-600 transition px-4">Log In</Link>
+               <Link to="/login" className="text-sm font-bold text-gray-600 hover:text-brand-600 transition px-4">{t('nav.login')}</Link>
                <Link 
                 to="/signup" 
                 className="bg-gray-900 text-white px-6 py-3 rounded-2xl text-sm font-bold hover:bg-brand-600 hover:shadow-xl hover:shadow-brand-600/20 transition-all"
               >
-                Start Free Trial
+                {t('nav.startTrial')}
               </Link>
             </div>
           )}

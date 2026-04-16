@@ -7,6 +7,7 @@ import {
     Edit3, RotateCcw, Zap, Lock, Unlock, ArrowRight, Info, Sparkles
 } from 'lucide-react';
 import toast from 'react-hot-toast';
+import { useTranslation } from 'react-i18next';
 
 // Simple SHA-256 in browser
 async function sha256(message: string): Promise<string> {
@@ -17,6 +18,7 @@ async function sha256(message: string): Promise<string> {
 }
 
 export default function TamperLab() {
+    const { t } = useTranslation();
     const [searchParams] = useSearchParams();
     const [certId, setCertId] = useState(searchParams.get('cert') || '');
     const [loading, setLoading] = useState(false);
@@ -150,13 +152,13 @@ export default function TamperLab() {
             <div className="text-center mb-12">
                 <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
                     <span className="px-4 py-1.5 bg-rose-50 text-rose-600 rounded-full text-xs font-black uppercase tracking-widest ring-1 ring-rose-100 mb-4 inline-block">
-                        Security Demonstration
+                        {t('tamperLab.badge')}
                     </span>
                     <h1 className="text-4xl md:text-5xl font-black text-gray-900 mb-4 tracking-tight">
-                        Tamper Simulation <span className="text-rose-500">Lab</span>
+                        {t('tamperLab.titlePrefix')} <span className="text-rose-500">{t('tamperLab.titleHighlight')}</span>
                     </h1>
                     <p className="text-gray-500 font-medium max-w-2xl mx-auto text-lg">
-                        Try to forge a certificate. Modify any field and watch the cryptographic hash break in real-time — proving why blockchain credentials are unforgeable.
+                        {t('tamperLab.subtitle')}
                     </p>
                 </motion.div>
             </div>

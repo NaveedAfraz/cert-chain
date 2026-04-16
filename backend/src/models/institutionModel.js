@@ -9,7 +9,13 @@ const createInstitution = async (id, name, slug, logoUrl = null) => {
 };
 
 const getAllInstitutions = async () => {
-    const [rows] = await db.query('SELECT * FROM Institutions ORDER BY created_at DESC');
+    const [rows] = await db.query(`
+        SELECT i.*, 
+               (SELECT COUNT(*) FROM InstitutionMembers im WHERE im.institution_id = i.id) as staff_count,
+               (SELECT COUNT(*) FROM ApiKeys ak WHERE ak.institution_id = i.id) as api_key_count
+        FROM Institutions i 
+        ORDER BY i.created_at DESC
+    `);
     return rows;
 };
 

@@ -4,13 +4,13 @@ import toast from 'react-hot-toast';
 import {
     Building2, Layout, ShieldCheck, Mail, Globe,
     Save, Sparkles, CreditCard, Users, Trash2, Plus,
-    UserPlus, X, Loader2, CheckCircle2, AlertCircle, Calendar, Eye, EyeOff
+    UserPlus, X, Loader2, CheckCircle2, AlertCircle, Calendar, Eye, EyeOff, Code, Key
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
-type TabType = 'general' | 'branding' | 'billing' | 'users';
+type TabType = 'general' | 'branding' | 'billing' | 'users' | 'developer';
 
 export default function Settings() {
     const { updateUser, canManageSettings, isStaff } = useAuth();
@@ -28,6 +28,11 @@ export default function Settings() {
     // Users State
     const [members, setMembers] = useState<any[]>([]);
     const [showAddModal, setShowAddModal] = useState(false);
+
+    // API Keys State
+    const [apiKeys, setApiKeys] = useState<any[]>([]);
+    const [newKey, setNewKey] = useState<{ key: string, label: string } | null>(null);
+    const [keyLabel, setKeyLabel] = useState('');
 
     useEffect(() => {
         // Restricted access for Staff
@@ -62,6 +67,7 @@ export default function Settings() {
 
     useEffect(() => {
         if (activeTab === 'users' && !isStaff) fetchMembers();
+        if (activeTab === 'developer' && !isStaff) fetchApiKeys();
     }, [activeTab]);
 
     const fetchMembers = async () => {
@@ -70,6 +76,42 @@ export default function Settings() {
             setMembers(res.data);
         } catch (error) {
             toast.error('Failed to load staff list');
+        }
+    };
+
+    const fetchApiKeys = async () => {
+        try {
+            const res = await api.get('/keys');
+            setApiKeys(res.data);
+        } catch (error) {
+            toast.error('Failed to load API keys');
+        }
+    };
+
+    const handleGenerateKey = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setSaving(true);
+        try {
+            const res = await api.post('/keys', { label: keyLabel });
+            setNewKey(res.data.apiKey);
+            setKeyLabel('');
+            fetchApiKeys(); // Refresh list to get prefix
+            toast.success('API Key generated successfully');
+        } catch (error) {
+            toast.error('Failed to generate key');
+        } finally {
+            setSaving(false);
+        }
+    };
+
+    const handleRevokeKey = async (keyId: string) => {
+        if (!confirm('Are you sure you want to revoke this API key? Any applications using it will be blocked.')) return;
+        try {
+            await api.delete(`/keys/${keyId}`);
+            toast.success('API Key revoked');
+            fetchApiKeys();
+        } catch (error) {
+            toast.error('Failed to revoke API key');
         }
     };
 
@@ -124,6 +166,7 @@ export default function Settings() {
                     <SidebarLink active={activeTab === 'general'} icon={<Building2 size={18} />} label="General Profile" onClick={() => setActiveTab('general')} />
                     <SidebarLink active={activeTab === 'branding'} icon={<Layout size={18} />} label="Branding" onClick={() => setActiveTab('branding')} />
                     <SidebarLink active={activeTab === 'users'} icon={<Users size={18} />} label="User Management" onClick={() => setActiveTab('users')} />
+                    <SidebarLink active={activeTab === 'developer'} icon={<Code size={18} />} label="Developer API" onClick={() => setActiveTab('developer')} />
                     <div className="pt-4 mt-4 border-t border-gray-100 flex flex-col gap-2">
                         <SidebarLink active={activeTab === 'billing'} icon={<CreditCard size={18} />} label="Billing" onClick={() => setActiveTab('billing')} />
                     </div>
@@ -348,6 +391,90 @@ export default function Settings() {
                                 </div>
                             )}
 
+                            {activeTab === 'developer' && (
+                                <div className="space-y-8">
+                                    <div className="space-y-1">
+                                        <h3 className="text-xs font-black text-brand-600 uppercase tracking-widest flex items-center gap-2">
+                                            <Code size={16} /> API Access Keys
+                                        </h3>
+                                        <p className="text-gray-400 text-sm font-medium">Use these keys to authenticate programmatic issuance requests.</p>
+                                    </div>
+
+                                    {newKey && (
+                                        <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="p-6 bg-emerald-50 border border-emerald-100 rounded-2xl space-y-4">
+                                            <div className="flex items-center gap-3 text-emerald-700 font-bold">
+                                                <Key size={18} /> New API Key Generated: {newKey.label}
+                                            </div>
+                                            <p className="text-sm font-medium text-emerald-600/80">
+                                                Please copy this key now. For your security, <strong className="text-emerald-700">it will never be shown again</strong>.
+                                            </p>
+                                            <div className="flex items-center gap-4 bg-white p-3 rounded-xl border border-emerald-200">
+                                                <code className="text-sm font-mono font-black text-gray-900 flex-1 px-2">{newKey.key}</code>
+                                                <button onClick={() => { navigator.clipboard.writeText(newKey.key); toast.success('Key copied!'); }} className="text-sm font-bold text-emerald-600 hover:text-emerald-800 transition">Copy</button>
+                                            </div>
+                                            <button onClick={() => setNewKey(null)} className="text-sm text-emerald-600 font-bold underline">I've saved it securely</button>
+                                        </motion.div>
+                                    )}
+
+                                    {!newKey && (
+                                        <form onSubmit={handleGenerateKey} className="flex gap-4 items-end bg-gray-50 p-6 rounded-[2rem] border border-gray-100">
+                                            <div className="flex-1 space-y-2">
+                                                <label className="text-xs font-black text-gray-400 uppercase tracking-widest ml-1">Key Label</label>
+                                                <input 
+                                                    required 
+                                                    className="w-full px-5 py-3.5 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-brand-500 outline-none font-medium text-gray-900 shadow-sm" 
+                                                    placeholder="e.g., Production Student System" 
+                                                    value={keyLabel} 
+                                                    onChange={e => setKeyLabel(e.target.value)} 
+                                                />
+                                            </div>
+                                            <button 
+                                                disabled={saving || !keyLabel.trim()} 
+                                                className="px-6 py-3.5 bg-gray-900 text-white rounded-xl font-bold hover:bg-brand-600 transition shadow-lg disabled:opacity-50 flex items-center gap-2"
+                                            >
+                                                {saving ? <Loader2 className="animate-spin" size={16} /> : <Plus size={16} />} 
+                                                Generate Key
+                                            </button>
+                                        </form>
+                                    )}
+
+                                    <div className="overflow-x-auto mt-8">
+                                        <table className="w-full text-left border-separate border-spacing-y-2">
+                                            <thead>
+                                                <tr>
+                                                    <th className="pb-2 px-4 text-[10px] font-black text-gray-400 uppercase tracking-widest">Label</th>
+                                                    <th className="pb-2 px-4 text-[10px] font-black text-gray-400 uppercase tracking-widest">Prefix</th>
+                                                    <th className="pb-2 px-4 text-[10px] font-black text-gray-400 uppercase tracking-widest">Created</th>
+                                                    <th className="pb-2 px-4 text-[10px] font-black text-gray-400 uppercase tracking-widest">Last Used</th>
+                                                    <th className="pb-2 px-4"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {apiKeys.length === 0 ? (
+                                                    <tr><td colSpan={5} className="text-center py-8 text-sm text-gray-400 font-medium">No API keys generated yet.</td></tr>
+                                                ) : apiKeys.map(key => (
+                                                    <tr key={key.id} className="group bg-gray-50/50 hover:bg-gray-50 transition">
+                                                        <td className="py-4 px-4 rounded-l-2xl">
+                                                            <div className="font-bold text-gray-900">{key.label}</div>
+                                                            {!key.is_active && <span className="text-[10px] text-rose-500 font-black uppercase tracking-widest bg-rose-50 px-2 py-0.5 rounded ml-2">Revoked</span>}
+                                                        </td>
+                                                        <td className="py-4 px-4 font-mono text-sm font-bold text-gray-500">{key.key_prefix}••••••••</td>
+                                                        <td className="py-4 px-4 text-xs font-bold text-gray-400">{new Date(key.created_at).toLocaleDateString()}</td>
+                                                        <td className="py-4 px-4 text-xs font-bold text-gray-400">{key.last_used_at ? new Date(key.last_used_at).toLocaleDateString() : 'Never'}</td>
+                                                        <td className="py-4 px-4 text-right rounded-r-2xl">
+                                                            {key.is_active && (
+                                                                <button onClick={() => handleRevokeKey(key.id)} className="text-xs font-black uppercase tracking-widest text-rose-500 hover:text-rose-700 bg-rose-50 hover:bg-rose-100 px-3 py-1.5 rounded-lg transition">
+                                                                    Revoke
+                                                                </button>
+                                                            )}
+                                                        </td>
+                                                    </tr>
+                                                ))}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            )}
 
                         </motion.div>
                     </AnimatePresence>

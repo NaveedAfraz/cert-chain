@@ -1,9 +1,12 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Network, FileCheck2, Fingerprint } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import PublicVerify from './PublicVerify'; // Import the verification form to sit inside home
 
 export default function Home() {
+  const { t } = useTranslation();
+
   return (
     <div className="flex flex-col min-h-screen">
       
@@ -25,22 +28,22 @@ export default function Home() {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-500"></span>
               </span>
-              Mainnet Active
+              {t('home.mainnetActive')}
             </div>
             
             <h1 className="text-5xl md:text-6xl font-extrabold text-gray-900 leading-[1.1] mb-6">
-              The Standard for <br/> <span className="text-gradient">Immutable Truth</span>
+              {t('home.titlePrefix')} <br/> <span className="text-gradient">{t('home.titleHighlight')}</span>
             </h1>
             <p className="text-lg md:text-xl text-gray-600 mb-8 max-w-lg leading-relaxed">
-              CertChain empowers institutions to issue cryptographically verifiable credentials directly to a decentralized ledger, eliminating fraud instantly.
+              {t('home.subtitle')}
             </p>
             
             <div className="flex flex-wrap gap-4">
               <a href="#verify-section" className="bg-gray-900 text-white px-8 py-3.5 rounded-full font-semibold hover:bg-brand-600 transition-all shadow-xl shadow-brand-500/20">
-                Verify Credential
+                {t('home.verifyButton')}
               </a>
               <a href="/about" className="bg-white text-gray-800 border border-gray-200 px-8 py-3.5 rounded-full font-semibold hover:bg-gray-50 transition-all">
-                Learn More
+                {t('home.learnMore')}
               </a>
             </div>
           </motion.div>

@@ -4,7 +4,7 @@ import toast from 'react-hot-toast';
 import { 
     Users, ShieldCheck, BarChart3, TrendingUp, 
     Building, AlertTriangle, LayoutDashboard, Search,
-    Plus, ChevronRight, Globe, Activity
+    Plus, ChevronRight, Globe, Activity, Key
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -74,7 +74,7 @@ export default function SuperAdminDashboard() {
             </header>
 
             {/* Global Stats Grid */}
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-4 md:gap-6">
                 <StatCard 
                     icon={<Building size={24} />} 
                     label="Active Tenants" 
@@ -88,6 +88,20 @@ export default function SuperAdminDashboard() {
                     value={stats?.totalCertificates} 
                     color="text-emerald-600" 
                     bg="bg-emerald-50"
+                />
+                <StatCard 
+                    icon={<Users size={24} />} 
+                    label="Platform Staff" 
+                    value={stats?.totalStaff} 
+                    color="text-blue-600" 
+                    bg="bg-blue-50"
+                />
+                <StatCard 
+                    icon={<Key size={24} />} 
+                    label="API Keys" 
+                    value={stats?.totalApiKeys} 
+                    color="text-purple-600" 
+                    bg="bg-purple-50"
                 />
                 <StatCard 
                     icon={<TrendingUp size={24} />} 
@@ -131,7 +145,15 @@ export default function SuperAdminDashboard() {
                                             <p className="text-xs font-mono text-gray-400">/{inst.slug}</p>
                                         </div>
                                     </div>
-                                    <div className="flex items-center gap-8">
+                                    <div className="flex items-center gap-6 md:gap-10">
+                                        <div className="text-right hidden md:block">
+                                            <p className="text-xs uppercase font-bold text-gray-400">Staff</p>
+                                            <span className="text-sm font-bold text-blue-600">{inst.staff_count}</span>
+                                        </div>
+                                        <div className="text-right hidden md:block">
+                                            <p className="text-xs uppercase font-bold text-gray-400">API Keys</p>
+                                            <span className="text-sm font-bold text-purple-600">{inst.api_key_count}</span>
+                                        </div>
                                         <div className="text-right hidden sm:block">
                                             <p className="text-xs uppercase font-bold text-gray-400">Status</p>
                                             <span className="text-sm font-bold text-emerald-600">Active</span>

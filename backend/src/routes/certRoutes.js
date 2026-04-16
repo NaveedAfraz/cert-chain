@@ -8,6 +8,7 @@ const {
 } = require('../controllers/certController');
 const { authMiddleware, institutionMiddleware, adminMiddleware } = require('../middleware/authMiddleware');
 const { checkSubscriptionLimit } = require('../middleware/subscriptionMiddleware');
+const { apiKeyAuth } = require('../controllers/apiKeyController');
 
 const router = express.Router();
 
@@ -19,5 +20,8 @@ router.post('/revoke/:id', authMiddleware, adminMiddleware, revokeCertificate);
 
 // Public verification
 router.get('/verify/:certificateId', verifyCertificate);
+
+// Programmatic API (API Key auth)
+router.post('/api/issue', apiKeyAuth, checkSubscriptionLimit, issueCertificate);
 
 module.exports = router;

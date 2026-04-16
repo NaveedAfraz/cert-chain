@@ -8,10 +8,12 @@ import {
     Download, Copy, CheckCircle2, Clock, Hash, Link2, 
     FileCheck2, User, GraduationCap, Calendar, Fingerprint, Globe, ExternalLink
 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import jsPDF from 'jspdf';
 
 export default function PublicVerify({ isEmbedded = false }: { isEmbedded?: boolean }) {
     const { certificateId: urlCertId } = useParams();
+    const { t, i18n } = useTranslation();
     const [certId, setCertId] = useState(urlCertId || '');
     const [loading, setLoading] = useState(false);
     const [result, setResult] = useState<any>(null);
@@ -161,12 +163,24 @@ export default function PublicVerify({ isEmbedded = false }: { isEmbedded?: bool
 
     return (
         <div className={`max-w-4xl mx-auto px-4 ${isEmbedded ? '' : 'mt-24 mb-12'}`}>
+            <div className="flex justify-end mb-4">
+                <select 
+                    className="bg-white border border-gray-200 text-sm font-bold text-gray-700 py-2 px-4 rounded-xl shadow-sm focus:ring-2 focus:ring-brand-500 outline-none"
+                    value={i18n.language}
+                    onChange={(e) => i18n.changeLanguage(e.target.value)}
+                >
+                    <option value="en">English</option>
+                    <option value="es">Español</option>
+                    <option value="fr">Français</option>
+                </select>
+            </div>
+
             {!isEmbedded && (
                 <div className="text-center mb-10">
                     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
                         <span className="px-4 py-1.5 bg-brand-50 text-brand-600 rounded-full text-xs font-black uppercase tracking-widest ring-1 ring-brand-100 mb-4 inline-block">Public Verification Engine</span>
-                        <h1 className="text-4xl md:text-5xl font-black text-gray-900 mb-4 tracking-tight">Blockchain Public Verification</h1>
-                        <p className="text-gray-500 font-medium max-w-xl mx-auto">Enter a certificate ID to cryptographically verify its authenticity against the immutable blockchain ledger in real-time.</p>
+                        <h1 className="text-4xl md:text-5xl font-black text-gray-900 mb-4 tracking-tight">{t('verify.title')}</h1>
+                        <p className="text-gray-500 font-medium max-w-xl mx-auto">{t('verify.subtitle')}</p>
                     </motion.div>
                 </div>
             )}
@@ -193,7 +207,7 @@ export default function PublicVerify({ isEmbedded = false }: { isEmbedded?: bool
             <form onSubmit={handleVerify} className="relative mb-8 shadow-lg group">
                 <input
                     type="text"
-                    placeholder="Enter Certificate UUID or paste verification URL..."
+                    placeholder={t('verify.inputPlaceholder')}
                     className="w-full pl-6 pr-32 py-4 text-lg border-2 border-gray-200 rounded-full focus:border-brand-500 focus:outline-none transition"
                     value={certId}
                     onChange={(e) => setCertId(e.target.value)}
@@ -203,7 +217,7 @@ export default function PublicVerify({ isEmbedded = false }: { isEmbedded?: bool
                     className="absolute right-2 top-2 bottom-2 px-6 bg-gray-900 text-white rounded-full font-semibold hover:bg-brand-600 disabled:opacity-50 flex items-center gap-2 transition"
                 >
                     <Search size={20} />
-                    {loading ? 'Verifying...' : 'Verify'}
+                    {loading ? t('verify.verifying') : t('verify.verifyButton')}
                 </button>
             </form>
 

@@ -80,3 +80,16 @@ CREATE TABLE IF NOT EXISTS Subscriptions (
     FOREIGN KEY (institution_id) REFERENCES Institutions(id) ON DELETE CASCADE,
     UNIQUE KEY (institution_id)
 );
+
+-- 8. API Keys (Developer Portal)
+CREATE TABLE IF NOT EXISTS ApiKeys (
+    id CHAR(36) PRIMARY KEY,
+    institution_id CHAR(36) NOT NULL,
+    key_prefix VARCHAR(8) NOT NULL,
+    key_hash VARCHAR(255) NOT NULL,
+    label VARCHAR(100) NOT NULL,
+    is_active BOOLEAN DEFAULT TRUE,
+    last_used_at TIMESTAMP NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (institution_id) REFERENCES Institutions(id) ON DELETE CASCADE
+);

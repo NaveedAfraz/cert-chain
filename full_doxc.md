@@ -1,3 +1,126 @@
+This is to certify that the project titled DESIGN AND IMPLEMENTATION OF A DECENTRALIZED MULTI-TENANT CREDENTIALING PLATFORM (CERTCHAIN) is a record of original and bonafide work done by:
+A PROJECT REPORT
+Submitted in partial fulfillment of the requirements for the award of the degree of
+BACHELOR OF COMPUTER APPLICATIONS (BCA)
+SUBMITTED BY
+MOHAMMAD RIYAN HUSSAIN
+H.T.NO: 280123861056
+UNDER THE GUIDANCE OF
+PROF. MOHAMMED ILYAS
+DEPARTMENT OF BCA
+ST. JOSEPH’S DEGREE COLLEGE
+SUBMITTED TO
+  			
+ AFFILIATED TO OSMANIA UNIVERSITY
+PILLAR NO.187 UPPARPALLY ATTAPUR, HYDERABAD
+2023-2026
+ST. JOSEPH’S DEGREE & P.G COLLEGE
+(Affiliated to Osmania university)
+BOSTON TOWERS, PILLAR NO. 187, UPPERPALLY,
+RAJENDRANAGAR, R.R DIST.
+PH. 04024018619 & 9619, 8125301483 & 86
+
+
+CERTIFICATE
+This is to certify that the project titled "DESIGN AND IMPLEMENTATION OF A DECENTRALIZED MULTI-TENANT CREDENTIALING PLATFORM (CERTCHAIN)" is a record of original and bonafide work done by:
+Student Details
+MOHAMMAD RIYAN HUSSAIN
+H.T. No. 280123861056
+BCA· St. Joseph's Degree College
+The project is being submitted in partial fulfillment towards the requirement of the award of the degree of Bachelor of Computer Applications (BCA) from Osmania University during the period of 2023–2026.
+
+
+
+
+Principal   
+Mrs. Jyothi Lakshmi
+ST. JOSEPH’S DEGREE & P.G COLLEGE
+(Affiliated to Osmania university)
+BOSTON TOWERS, PILLAR NO. 187, UPPERPALLY,
+RAJENDRANAGAR, R.R DIST.
+PH. 04024018619 & 9619, 8125301483 & 86
+
+CERTIFICATE
+This is to certify that MOHAMMAD RIYAN HUSSAIN is a bona fide student of BCA III Year of this institution with Hall Ticket No: 280123861056 for the academic year 2023–2026. He has successfully submitted the project titled "Design and Implementation of a Decentralized Multi-Tenant Credentialing Platform (CertChain)" in partial fulfillment of the requirements for the award of the degree of Bachelor of Computer Applications (BCA).
+
+
+
+
+
+
+Project Guide
+
+
+ST. JOSEPH’S DEGREE & P.G COLLEGE
+(Affiliated to Osmania university)
+BOSTON TOWERS, PILLAR NO. 187, UPPERPALLY,
+RAJENDRANAGAR, R.R DIST.
+PH. 04024018619 & 9619, 8125301483 & 86
+
+CERTIFICATE
+This is to certify that MOHAMMAD RIYAN HUSSAIN is a bona fide student of BCA III Year of this institution with Hall Ticket No: 280123861056 for the academic year 2023–2026. He has successfully submitted the project titled "Design and Implementation of a Decentralized Multi-Tenant Credentialing Platform (CertChain)" in partial fulfillment of the requirements for the award of the degree of Bachelor of Computer Applications (BCA).
+
+
+
+
+
+
+
+
+
+
+External Examiner     				   Internal Examiner
+
+
+ST. JOSEPH’S DEGREE & P.G COLLEGE
+(Affiliated to Osmania university)
+BOSTON TOWERS, PILLAR NO. 187, UPPERPALLY,
+RAJENDRANAGAR, R.R DIST.
+PH. 04024018619 & 9619, 8125301483 & 86
+
+CERTIFICATE
+This is to certify that MOHAMMAD RIYAN HUSSAIN is a bona fide student of BCA III Year of this institution with Hall Ticket No: 280123861056 for the academic year 2023–2026. He has successfully submitted the project titled "Design and Implementation of a Decentralized Multi-Tenant Credentialing Platform (CertChain)" in partial fulfillment of the requirements for the award of the degree of Bachelor of Computer Applications (BCA).
+
+
+
+
+
+
+
+
+
+
+HOD Signature
+
+DECLARATION
+I am a student of St. Joseph Degree College, Upper Pally, Hyderabad. I do hereby declare that the project report titled "Design and Implementation of a Decentralized Multi-Tenant Credentialing Platform (CertChain)" is an original and bonafide work done by me. This is being submitted in partial fulfillment of the requirement for the award of Bachelor of Computer Applications (BCA).
+
+MOHAMMAD RIYAN HUSSAIN
+H.T.NO: 280123861056
+
+
+
+
+
+
+
+
+
+ACKNOWLEDGEMENT
+I would like to express my sincere gratitude to our Principal and the Head of the Department of BCA for providing me the opportunity to complete this project. I would also like to thank my project guide and faculty members for their valuable guidance, support, and encouragement throughout the development of my project titled "Design and Implementation of a Decentralized Multi-Tenant Credentialing Platform (CertChain)."
+
+I am thankful to my friends and classmates who helped me with their suggestions and support during the completion of this project. Finally, I would like to express my heartfelt thanks to my family for their continuous encouragement and support throughout my studies.
+
+
+
+
+Abstract
+The modern academic and professional landscape is severely compromised by the proliferation of forged credentials and the fundamental vulnerabilities of traditional verification processes. Physical paper certificates are highly susceptible to sophisticated counterfeiting, while conventional digital records stored in centralized, siloed institutional databases remain vulnerable to unauthorized alterations and malicious tampering. Traditional verification processes are notoriously inefficient, often requiring prospective employers to engage in slow, manual correspondence with university registrars.
+
+CertChain is designed and developed as an advanced, multi-tenant Software-as-a-Service platform engineered to issue, manage, and publicly verify academic and professional credentials by anchoring them to a blockchain. The system introduces a strict role-based access control hierarchy ensuring secure data delegation for institutional administrators. The platform features an advanced cryptographic pipeline that sanitizes student personally identifiable information and generates a deterministic SHA-256 hash.
+
+The core of the system is a decentralized smart contract deployed on the Polygon blockchain that permanently anchors a unique mathematical fingerprint of a student's achievement without exposing underlying sensitive data. This zero-knowledge approach replaces vulnerable legacy databases with a dual-layer public verification protocol. Built using React 19, TypeScript, Node.js, and a relational MySQL database, CertChain delivers a premium, high-performance environment that bridges the operational efficiency of traditional institutional relational databases with the cryptographic immutability of modern Web3 networks.
+
 CHAPTER 1
 INTRODUCTION
 1.1 Introduction
@@ -66,6 +189,7 @@ Commonly utilized legacy systems and their specific limitations include:
 •	Centralized Institutional Databases: While many universities have digitized their records, these centralized SQL databases act as isolated silos. They lack cross-institutional standardization and remain highly vulnerable to insider threats, unauthorized alterations, or targeted cyberattacks that could silently compromise the integrity of academic records.
 •	Third-Party Background Check Agencies: Employers often outsource verification to costly third-party agencies. These intermediaries introduce significant financial overhead, prolong the recruitment lifecycle, and still ultimately rely on manual communication with the issuing institutions to confirm data validity.
 •	Pure Public Blockchain Deployments: Early attempts to migrate academic records to Web3 environments often involved writing raw student data directly to a public ledger. This approach represents a catastrophic violation of modern data privacy regulations (such as GDPR), as it permanently exposes sensitive Personally Identifiable Information (PII) to the public domain without any mechanism for true deletion.
+•	Regional and Sovereign Initiatives (Indian Context): In India, significant strides have been made to modernize credentialing through sovereign initiatives. The Indian Institute of Technology (IIT) Kanpur notably pioneered the issuance of unforgeable digital degrees anchored to a blockchain, launched by the Prime Minister. Similarly, the Central Board of Secondary Education (CBSE) has deployed its own Academic Blockchain for secure results, and the Maharashtra State Board of Technical Education (MSBTE) has successfully issued over a million diploma certificates utilizing the Polygon blockchain. While successful, these remains largely siloed efforts, highlighting the need for a unified, multi-tenant SaaS platform like CertChain to democratize access for all institutions.
 CertChain directly addresses these pervasive systemic failures by introducing a hybrid, privacy-first architecture. By storing sensitive student PII securely within an isolated, multi-tenant MySQL relational database and exclusively writing a normalized SHA-256 cryptographic hash to the public Polygon blockchain, the platform guarantees undeniable proof of existence. This zero-knowledge approach eliminates the risk of forgery, provides instantaneous public verification, and ensures absolute compliance with strict data privacy laws.
 3.2 Relevant Technologies
 The development of the CertChain ecosystem relies on a sophisticated, multi-tiered technology stack carefully selected to bridge high-performance web architecture with decentralized Web3 immutability.
@@ -79,7 +203,8 @@ The core technologies driving the platform include:
 3.3 Literature Review
 Academic and industry literature surrounding educational technology and digital identity consistently underscores the profound vulnerabilities within legacy credentialing systems. Researchers have extensively documented that the ease of digital manipulation has led to an unprecedented rise in academic fraud, disproportionately diluting the value of legitimate qualifications and eroding employer trust. As digital transformation initiatives permeate higher education, the architectural focus has shifted heavily toward verifiable credentials and decentralized identity management.
 Contemporary studies in applied cryptography and Web3 architectures strongly advocate for the integration of blockchain technology as a decentralized state machine capable of providing immutable timestamps and proof of origin. However, the academic consensus heavily scrutinizes the "privacy versus transparency trilemma" inherent in public blockchains. Literature emphasizes that storing plain-text personal data on an immutable ledger violates the fundamental right to be forgotten. Consequently, recent cryptographic research champions the use of off-chain storage combined with on-chain cryptographic hashing. By generating a deterministic hash of the credential payload, systems can anchor a mathematically irreversible fingerprint to the blockchain, allowing anyone to verify the document's authenticity without exposing the underlying data.
-The engineering and cryptographic philosophy behind the CertChain platform is deeply rooted in these modern academic findings. By synthesizing the theoretical foundations of scalable RESTful web architecture with a highly specialized, gasless verification protocol on the Polygon network, the project effectively bridges the gap between theoretical Web3 privacy research and practical, high-stakes institutional deployment.
+Furthermore, sovereign policy frameworks, such as the **"National Strategy on Blockchain"** released by the Ministry of Electronics and Information Technology (MeitY), Government of India, explicitly identify "Educational Certificate Management" as a primary utility of blockchain. The strategy advocates for a National Blockchain Framework (NBF) that ensures trust and transparency across citizen-centric services. This alignment with government-led initiatives underscores the strategic importance of transition from legacy SQL-only databases to the hybrid, blockchain-anchored model implemented by CertChain.
+The engineering and cryptographic philosophy behind the CertChain platform is deeply rooted in these modern academic findings and policy frameworks. By synthesizing the theoretical foundations of scalable RESTful web architecture with a highly specialized, gasless verification protocol on the Polygon network, the project effectively bridges the gap between theoretical Web3 privacy research and practical, high-stakes institutional deployment.
  
 CHAPTER 4
 SYSTEM DEVELOPMENT AND DESIGN
@@ -122,6 +247,12 @@ The platform boasts a comprehensive suite of features designed to facilitate sec
 •	Multi-Tenant SaaS Governance: Role-based administrative dashboards that allow super-administrators to onboard distinct educational institutions, manage tiered subscription limits (e.g., Trial, Basic, Pro), and monitor global issuance metrics.
 •	On-Chain Revocation: Administrative capabilities that allow authorized issuers to permanently invalidate a compromised credential both within the local MySQL database and on the public ledger.
 •	Automated Document Generation: Integrated frontend utilities capable of dynamically rendering and exporting high-resolution, branded PDF certificates embedded with verifiable QR codes.
+•	Interactive Tamper Laboratory: A browser-based cryptographic simulation engine that allows users to load any verified certificate and modify its fields in real-time. The system recalculates the SHA-256 hash client-side using the Web Crypto API, visually demonstrating the avalanche effect with a character-by-character hash comparison and animated similarity meter.
+•	Public Institution Directory: An unauthenticated, searchable directory listing all active institutional tenants on the CertChain network. Each institution card displays live certificate counts, verification totals, and founding dates, linking directly to dedicated public profile pages.
+•	Public Institution Profile: A dedicated, slug-based public landing page for each registered institution, featuring animated issuance activity bar charts (last 6 months), top program rankings, and aggregate staff and verification counts — all fetched via unauthenticated public API endpoints.
+•	Developer API Key Management: A secure developer console within the Settings module enabling institutional administrators to generate, label, and revoke cryptographic API keys (ck_live_xxx format). Keys are stored as SHA-256 hashes in the database, with only the prefix retained for identification. A dedicated apiKeyAuth middleware authenticates programmatic certificate issuance requests via the x-api-key HTTP header.
+•	Institutional Staff Management: An administrative user management module allowing institution admins to invite, onboard, and revoke staff members within their isolated multi-tenant workspace. Staff accounts are created via transactional database operations with bcrypt-hashed passwords and automatically linked to the institutional tenant via the InstitutionMembers junction table.
+•	Internationalization (i18n): The platform implements multi-language support via the react-i18next framework, enabling all public-facing pages and key interactive modules to be dynamically rendered in the user's preferred language.
 4.8 Structured File System
 The project source code is organized into a modern monorepo structure, creating clear physical boundaries between the interactive client interface, the transactional server environment, and the decentralized smart contract infrastructure to facilitate highly organized full-stack development.
  
@@ -781,22 +912,15 @@ export default function CertificateDetails() {
     if (!window.confirm('Are you absolutely sure? Revocation is permanent on the blockchain.')) return;
     try {
         await api.post(`/certificates/revoke/${id}`);
-        toast.success('Certificate Revoked on Public Ledger');
-        fetchDetails(); // Reload state
-    } catch (err) { toast.error('Revocation Error'); }
-  };
-}
-```
-
-5.7.10 Super Administrator Platform Dashboard
+        toast.success('Certificate Revoked o5.7.10 Super Administrator Platform Dashboard
 
 The Super Administrator Dashboard provides a global, bird's-eye view of the entire CertChain SaaS platform, exclusively accessible to the platform owner account.
 
-Displays four platform-wide KPIs: Active Tenants (total institutions), Global Certs, total Verifications, and the live Verification Success Rate percentage.
+Displays six platform-wide KPIs: Active Tenants (total institutions), Global Certs, Platform Staff (total across all tenants), API Keys (total generated), total Verifications, and the live Verification Success Rate percentage.
 
-Provides a full, filterable institution management table listing every registered tenant with their slug and active status.
+Provides a full, filterable institution management table listing every registered tenant with their slug, active status, per-institution staff count, and per-institution API key count.
 
-Features an Integrity Health panel showing the ratio of genuine verifications vs. tampered attempts, sourced directly from VerificationLogs.
+Features a "Top Issuers" leaderboard ranking the most active institutions by credential volume, and an Integrity Health panel showing the ratio of genuine verifications vs. tampered attempts, sourced directly from VerificationLogs.
 
 Includes an animated onboarding modal enabling the Super Admin to register new institutions directly (POST /api/institutions), bypassing the self-service signup flow.
  
@@ -808,9 +932,8 @@ export default function SuperAdminDashboard() {
   const [stats, setStats] = useState<any>(null);
   const [institutions, setInstitutions] = useState<any[]>([]);
 
-  const fetchGlobalData = async () => {
+  const fetchData = async () => {
     try {
-        // Parallel execution for zero-latency UI population
         const [statsRes, instRes] = await Promise.all([
             api.get('/institutions/global-stats'),
             api.get('/institutions')
@@ -818,32 +941,344 @@ export default function SuperAdminDashboard() {
         setStats(statsRes.data);
         setInstitutions(instRes.data);
     } catch (error) {
-        toast.error('Failed to load global administrative context');
+        toast.error('Failed to load platform data');
     }
   };
 
-  const successRate = stats ? Math.round((stats.verificationStats.success / stats.verificationStats.total) * 100) : 0;
-
   return (
-    <div className="space-y-12">
-      {/* Global Metadata Cards */}
-      <div className="grid grid-cols-4 gap-6">
-        <MetricCard label="Active Tenants" value={stats?.totalInstitutions} />
-        <MetricCard label="Global Certs" value={stats?.totalCertificates} />
-        <MetricCard label="Total Verifications" value={stats?.verificationStats.total} />
-        <MetricCard label="Success Rate" value={`${successRate}%`} />
+    <div className="space-y-10">
+      {/* Six Global Metadata Cards */}
+      <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-6">
+        <StatCard icon={<Building />} label="Active Tenants" value={stats?.totalInstitutions} />
+        <StatCard icon={<ShieldCheck />} label="Global Certs" value={stats?.totalCertificates} />
+        <StatCard icon={<Users />} label="Platform Staff" value={stats?.totalStaff} />
+        <StatCard icon={<Key />} label="API Keys" value={stats?.totalApiKeys} />
+        <StatCard icon={<TrendingUp />} label="Verifications" value={stats?.verificationStats.total} />
+        <StatCard icon={<BarChart3 />} label="Success Rate"
+          value={`${stats?.verificationStats.total > 0
+            ? Math.round((stats.verificationStats.success / stats.verificationStats.total) * 100) : 100}%`}
+        />
       </div>
-      {/* Institution Control Layer renders institutions list table below */}
+      {/* Institution table with per-institution staff_count and api_key_count */}
+      {institutions.map((inst) => (
+        <div key={inst.id} className="flex items-center justify-between">
+          <span className="font-bold">{inst.name}</span>
+          <span className="text-blue-600">Staff: {inst.staff_count}</span>
+          <span className="text-purple-600">API Keys: {inst.api_key_count}</span>
+        </div>
+      ))}
     </div>
   );
 }
 ```
 
- 
+5.7.11 Interactive Tamper Laboratory (TamperLab)
+
+The Tamper Laboratory is a highly specialized, browser-based cryptographic simulation engine designed to educate users and auditors on the mathematical impossibility of certificate forgery. It provides a hands-on environment where any verified certificate can be loaded and its fields modified in real-time to visually demonstrate the SHA-256 avalanche effect.
+
+Allows users to load any verified certificate by UUID, fetching its original data and blockchain-anchored hash via the public verification API.
+
+Provides editable input fields for Student Name, Student Email, Course Name, and Issue Date. As the user modifies any field, the system recalculates the SHA-256 hash entirely client-side using the browser's native Web Crypto API (crypto.subtle.digest), mirroring the backend's exact normalization logic (lowercasing emails, trimming whitespace, flooring timestamps to the nearest second).
+
+Renders a character-by-character hash comparison panel where matching characters appear in green and divergent characters appear in red, visually demonstrating how a single-character change cascades into a completely different 64-character hash.
+
+Features an animated Hash Similarity meter with percentage-based color coding (100% green, >50% amber, <50% red), dynamically updating as the user types.
+
+Includes a comprehensive educational section explaining the three pillars of cryptographic security: the Avalanche Effect, One-Way Functions, and Immutable Ledger guarantees.
+
+ Figure 5.11: Screenshot of the Tamper Laboratory interface demonstrating the SHA-256 avalanche effect with real-time hash recalculation.
+
+Sample Code of TamperLab Component
+
+```tsx
+// frontend/src/pages/TamperLab.tsx (Cryptographic Simulation Excerpt)
+async function sha256(message: string): Promise<string> {
+    const msgBuffer = new TextEncoder().encode(message);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+export default function TamperLab() {
+    const [originalHash, setOriginalHash] = useState('');
+    const [tamperedHash, setTamperedHash] = useState('');
+    const [isModified, setIsModified] = useState(false);
+
+    // Recalculate hash whenever editable fields change
+    useEffect(() => {
+        if (!originalCert) return;
+        const recalc = async () => {
+            const dateObj = new Date(dateForHash);
+            const normalizedTime = Math.floor(dateObj.getTime() / 1000) * 1000;
+            const raw = `${editEmail.trim().toLowerCase()}|${editName.trim()}|${editCourse.trim()}|${normalizedTime}`;
+            const hash = await sha256(raw);
+            setTamperedHash(hash);
+        };
+        const debounce = setTimeout(recalc, 300);
+        return () => clearTimeout(debounce);
+    }, [editName, editCourse, editEmail, editDate, originalCert]);
+
+    // Character-by-character hash comparison renderer
+    const renderHashComparison = () => {
+        return originalHash.split('').map((char, i) => (
+            <span key={i} className={char === tamperedHash[i] ? 'text-emerald-500' : 'text-rose-500 font-bold'}>
+                {tamperedHash[i]}
+            </span>
+        ));
+    };
+}
+```
+
+5.7.12 Public Institution Directory
+
+The Institution Directory module provides a fully public, unauthenticated portal that lists all active institutional tenants registered on the CertChain network. This transparency layer allows prospective students, employers, and auditors to discover which educational institutions are actively utilizing blockchain-based credentialing.
+
+Displays a responsive, searchable card grid listing each institution's name, URL-friendly slug, logo, founding year, total active certificates, and total verification count.
+
+Implements client-side search filtering by institution name or slug for instant discovery without additional API calls.
+
+Each institution card links directly to a dedicated public profile page (/institution/:slug), providing deeper analytics and a direct pathway to the public verification portal.
+
+Features a global statistics bar summarizing the total number of verified institutions and aggregate certificates issued across the entire platform.
+
+ Figure 5.12: Screenshot of the Public Institution Directory displaying the searchable network of verified institutional tenants.
+
+Sample Code of Institution Directory Component
+
+```tsx
+// frontend/src/pages/InstitutionDirectory.tsx (Public Directory Excerpt)
+export default function InstitutionDirectory() {
+    const [institutions, setInstitutions] = useState<any[]>([]);
+    const [search, setSearch] = useState('');
+
+    useEffect(() => {
+        const fetch = async () => {
+            const res = await api.get('/institutions/directory');
+            setInstitutions(res.data);
+        };
+        fetch();
+    }, []);
+
+    const filtered = institutions.filter(i =>
+        i.name.toLowerCase().includes(search.toLowerCase()) ||
+        i.slug.toLowerCase().includes(search.toLowerCase())
+    );
+
+    return (
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filtered.map((inst) => (
+                <Link to={`/institution/${inst.slug}`} key={inst.slug}>
+                    <div className="bg-white rounded-[2rem] border border-gray-100 shadow-sm">
+                        <h3 className="font-black">{inst.name}</h3>
+                        <span>{inst.cert_count || 0} certs</span>
+                        <span>{inst.verify_count || 0} verified</span>
+                    </div>
+                </Link>
+            ))}
+        </div>
+    );
+}
+```
+
+5.7.13 Public Institution Profile
+
+The Institution Profile page provides a dedicated, slug-based public landing page for each registered institution, offering transparent insight into the institution's credentialing activity without requiring any authentication.
+
+Renders a prominent institution header displaying the institution name, slug, logo, and a "Verified Institution" trust badge within a visually rich dark-gradient hero section.
+
+Displays four key profile statistics: total Certificates issued, total Verifications performed, total Staff members, and the institution's founding year on the platform.
+
+Features an animated bar chart visualizing the institution's issuance activity over the last six months, dynamically computed from the monthly certificate data returned by the backend.
+
+Renders a ranked "Top Programs" list showing the most popular courses by certificate count, with animated progress bars to visualize relative popularity.
+
+Includes a direct call-to-action banner linking visitors to the public verification portal to instantly validate any credential issued by the displayed institution.
+
+ Figure 5.13: Screenshot of the Institution Profile page displaying issuance activity charts and top programs for a registered institution.
+
+Sample Code of Institution Profile Component
+
+```tsx
+// frontend/src/pages/InstitutionProfile.tsx (Public Profile Excerpt)
+export default function InstitutionProfile() {
+    const { slug } = useParams<{ slug: string }>();
+    const [data, setData] = useState<any>(null);
+
+    useEffect(() => {
+        const fetchProfile = async () => {
+            const res = await api.get(`/institutions/profile/${slug}`);
+            setData(res.data);
+        };
+        if (slug) fetchProfile();
+    }, [slug]);
+
+    const { institution, stats } = data;
+
+    // Build chart data for last 6 months
+    const chartData = (() => {
+        const months: { label: string; count: number }[] = [];
+        for (let i = 5; i >= 0; i--) {
+            const d = new Date();
+            d.setMonth(d.getMonth() - i);
+            const key = d.toISOString().slice(0, 7);
+            const found = stats?.monthlyData?.find((m: any) => m.month === key);
+            months.push({ label: d.toLocaleString('default', { month: 'short' }), count: found?.count || 0 });
+        }
+        return months;
+    })();
+
+    return (
+        <div className="space-y-10">
+            {/* Hero with institution name, slug, logo, stats */}
+            <ProfileStat icon={<Award />} label="Certificates" value={stats.totalCertificates} />
+            <ProfileStat icon={<ShieldCheck />} label="Verifications" value={stats.totalVerifications} />
+            <ProfileStat icon={<Users />} label="Staff" value={stats.totalStaff} />
+            {/* Animated bar chart rendering chartData */}
+            {/* Top Programs ranked list */}
+        </div>
+    );
+}
+```
+
+5.7.14 Developer API Key Management Console
+
+The Developer API module, accessible via the "Developer API" tab within the Portal Configuration settings, provides institutional administrators with the ability to programmatically integrate CertChain's issuance engine into external Learning Management Systems (LMS), Enterprise Resource Planning (ERP) platforms, or custom institutional workflows.
+
+Enables administrators to generate labeled, cryptographically secure API keys in the ck_live_ format using Node.js crypto.randomBytes(24). The raw key is displayed exactly once upon generation and is never stored or retrievable again.
+
+Stores only the SHA-256 hash of the API key in the ApiKeys database table alongside a human-readable label, a key prefix (first 12 characters) for identification, and an is_active status flag.
+
+Features a comprehensive key management table displaying all generated keys with their label, prefix, last_used_at timestamp, and creation date, alongside a one-click revocation action protected by a browser confirmation dialog.
+
+The backend apiKeyAuth middleware intercepts incoming requests bearing the x-api-key HTTP header, hashes the provided key, and performs a database lookup against the stored hash. Upon successful authentication, the middleware injects the institution context into the request object, enabling programmatic certificate issuance with full tenant isolation.
+
+ Figure 5.14: Screenshot of the Developer API Key Management console displaying generated keys and the one-time key reveal modal.
+
+Sample Code of API Key Controller
+
+```javascript
+// backend/src/controllers/apiKeyController.js (Key Generation Excerpt)
+const generateApiKey = async (req, res) => {
+    const institutionId = req.user.institutionId;
+    const { label } = req.body;
+
+    // Generate a secure random key: ck_live_xxxxxxxxxxxxxxxx
+    const rawKey = `ck_live_${crypto.randomBytes(24).toString('hex')}`;
+    const keyPrefix = rawKey.substring(0, 12); // ck_live_xxxx
+    const keyHash = crypto.createHash('sha256').update(rawKey).digest('hex');
+
+    await db.query(
+        'INSERT INTO ApiKeys (id, institution_id, key_prefix, key_hash, label) VALUES (?, ?, ?, ?, ?)',
+        [uuidv4(), institutionId, keyPrefix, keyHash, label]
+    );
+
+    // Return the raw key ONLY this one time
+    res.status(201).json({
+        apiKey: { id, label, key: rawKey, prefix: keyPrefix }
+    });
+};
+
+// Middleware: Authenticate requests using API key
+const apiKeyAuth = async (req, res, next) => {
+    const apiKey = req.headers['x-api-key'];
+    const keyHash = crypto.createHash('sha256').update(apiKey).digest('hex');
+    const [rows] = await db.query(
+        `SELECT ak.*, i.id as inst_id FROM ApiKeys ak
+         JOIN Institutions i ON ak.institution_id = i.id
+         WHERE ak.key_hash = ? AND ak.is_active = TRUE`,
+        [keyHash]
+    );
+    req.user = { institutionId: rows[0].institution_id, role: 'API_KEY' };
+    next();
+};
+```
+
+5.7.15 Institutional Staff Management Module
+
+The Staff Management module, accessible via the "User Management" tab within Portal Configuration, empowers institutional administrators to govern team access within their isolated multi-tenant workspace.
+
+Displays a comprehensive list of all staff members linked to the institution, including their full name, email address, assigned role (ADMIN or STAFF), and account creation date.
+
+Provides an "Add Staff" modal enabling the admin to create new user accounts with full name, email, password, and role assignment. The backend executes this operation within a database transaction, atomically creating the User record (with bcrypt-hashed password) and the InstitutionMembers junction record in a single commit.
+
+Features per-user revocation capabilities, allowing administrators to instantly remove a staff member's access to the institutional dashboard. A self-removal guard prevents administrators from accidentally revoking their own access.
+
+Access to the Settings module is restricted at the frontend level — users with a 'STAFF' role are immediately redirected to the Admin Dashboard and blocked from accessing the configuration interface.
+
+ Figure 5.15: Screenshot of the Staff Management interface displaying the institutional team roster and the Add Staff modal.
+
+Sample Code of Staff Management Backend
+
+```javascript
+// backend/src/controllers/institutionController.js (Staff Management Excerpt)
+const addInstitutionMember = async (req, res) => {
+    let conn;
+    try {
+        const institutionId = req.user.institutionId;
+        const { fullName, email, password, role } = req.body;
+
+        conn = await db.getConnection();
+        await conn.beginTransaction();
+
+        const userId = uuidv4();
+        const hash = await bcrypt.hash(password, 10);
+
+        // 1. Create User
+        await conn.query(
+            'INSERT INTO Users (id, full_name, email, password_hash) VALUES (?, ?, ?, ?)',
+            [userId, fullName, email, hash]
+        );
+
+        // 2. Link to Institution
+        await conn.query(
+            'INSERT INTO InstitutionMembers (id, user_id, institution_id, role) VALUES (?, ?, ?, ?)',
+            [uuidv4(), userId, institutionId, role || 'STAFF']
+        );
+
+        await conn.commit();
+        res.status(201).json({ message: 'Staff member added successfully' });
+    } catch (error) {
+        if (conn) await conn.rollback();
+        res.status(500).json({ message: error.code === 'ER_DUP_ENTRY' ? 'Email already registered' : 'Error adding staff' });
+    } finally {
+        if (conn) conn.release();
+    }
+};
+
+const removeInstitutionMember = async (req, res) => {
+    const institutionId = req.user.institutionId;
+    const { userId } = req.params;
+
+    // Self-removal guard
+    if (userId === req.user.id) {
+        return res.status(400).json({ message: 'Cannot remove yourself' });
+    }
+
+    await db.query(
+        'DELETE FROM InstitutionMembers WHERE user_id = ? AND institution_id = ?',
+        [userId, institutionId]
+    );
+    res.json({ message: 'User access revoked' });
+};
+```
+
+5.7.16 Student Credential Portfolio
+
+The Student Dashboard provides graduates with a personalized portfolio view for all blockchain-secured credentials linked to their email address. This module serves as the student's gateway to managing and sharing their verified achievements.
+
+Features a prominent hero section emphasizing that the student's credentials are "Secured by Blockchain," with a direct "Share All Proofs" action for professional networking.
+
+Renders a "My Credential History" section displaying issued certificates in a responsive card grid, with loading skeleton placeholders and an empty-state prompt informing students that credentials will automatically appear once issued by their institution.
+
+Includes a sidebar "Trust Network" panel confirming the student's verified identity status and blockchain synchronization state, alongside educational content about blockchain certificate authenticity.
+
+ Figure 5.16: Screenshot of the Student Credential Portfolio dashboard displaying the blockchain-secured achievements view.
+
+ 
 CHAPTER 6
 TESTING AND RESULTS
- 
-Testing represents a highly critical phase in the development lifecycle of the CertChain platform. Because the system serves as a definitive source of truth for academic and professional credentials, ensuring absolute cryptographic accuracy and transactional security was paramount. This chapter provides a detailed exploration of the comprehensive testing methodologies applied across the Node.js backend, the React single-page application, and the blockchain integration layers to guarantee a highly reliable, fraud-proof digital ecosystem.
+ 
+Testing represents a highly critical phase in the development lifecycle of the CertChain platform. Because the system serves as a definitive source of truth for academic and professional credentials, ensuring absolute cryptographic accuracy and transactional security was paramount. This chapter provides a detailed exploration of the comprehensive testing methodologies applied across the Node.js backend, the React single-page application, and the blockchain integration layers to guarantee a highly reliable, fraud-proof digital ecosystem., the React single-page application, and the blockchain integration layers to guarantee a highly reliable, fraud-proof digital ecosystem.
 6.1 Backend Integration and Unit Testing
 The primary objective of the backend testing phase was to evaluate the core application programming interface and database interactions in strict isolation, ensuring that business logic and cryptographic operations executed flawlessly. The development team utilized the Jest framework alongside Supertest to automate these backend audits. To safeguard production data, the backend automatically routed all test operations to a dedicated CertChain_test database environment triggered by the NODE_ENV=test variable.
 To ensure fast and deterministic test execution in continuous integration environments, the testing suite implemented robust mocking strategies within the tests/setup.js configuration. The native uuid library was explicitly mocked to produce deterministic sequential identifiers, ensuring that complex relational foreign key constraints could be tested predictably. Furthermore, a global clearDatabase() helper was engineered to disable foreign key checks temporarily and truncate all seven database tables between test runs, guaranteeing a pristine state for every assertion. Crucially, the blockchain service within blockchain.js was completely mocked to export dummy contract objects with hardcoded transaction hashes, allowing the backend logic to be audited rapidly without expending testnet gas fees or relying on an active Hardhat node.
@@ -984,4 +1419,8 @@ The deployment and continuous operation of the CertChain ecosystem demand robust
 [40] National Institute of Standards and Technology (NIST), "FIPS 180-4: Secure Hash Standard (SHA-256)," NIST Publications, 2015. [Online]. Available: https://csrc.nist.gov/publications/detail/fips/180/4/final.
 [41] N. Provos and D. Mazières, "A future-adaptable password scheme," in Proc. USENIX Annual Technical Conf., Monterey, CA, USA, 1999, pp. 81–91.
 [42] React Icons Contributors, "react-icons: SVG icon library for React with popular icon packs (Version 5.6.0)," npm Registry, 2024. [Online]. Available: https://www.npmjs.com/package/react-icons.
+[43] Ministry of Electronics and Information Technology (MeitY), "National Strategy on Blockchain," Government of India, 2021. [Online]. Available: https://www.meity.gov.in/writereaddata/files/National_Strategy_on_Blockchain.pdf.
+[44] Indian Institute of Technology Kanpur (IITK), "Prime Minister Narendra Modi launches blockchain-based digital degrees at IIT Kanpur," 2021. [Online]. Available: https://www.iitk.ac.in/new/pm-launches-blockchain-based-degrees.
+[45] Central Board of Secondary Education (CBSE), "Academic (Accreditation) Blockchain: A system for secure results," 2021. [Online]. Available: https://cbse-blockchain.nic.in/.
+[46] Polygon Labs, "Maharashtra State Board (MSBTE) issues 1 million diploma certificates via Polygon Blockchain," 2022. [Online]. Available: https://polygon.technology/blog/msbte-issues-diploma-certs-on-polygon.
 

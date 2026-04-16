@@ -1,8 +1,10 @@
 import React from 'react';
 import { Check, ArrowRight, Zap, Target, ShieldCheck } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 export default function Pricing() {
+    const { t } = useTranslation();
     return (
         <div className="max-w-7xl mx-auto px-6 py-20 space-y-16">
             <div className="text-center space-y-4">
@@ -11,13 +13,13 @@ export default function Pricing() {
                     animate={{ opacity: 1, y: 0 }}
                     className="px-4 py-1.5 bg-brand-50 text-brand-600 rounded-full text-xs font-black uppercase tracking-widest ring-1 ring-brand-100"
                 >
-                    Simple SaaS Pricing
+                    {t('pricing.subtitle')}
                 </motion.span>
                 <h1 className="text-5xl md:text-6xl font-black text-gray-900 tracking-tight">
-                    Scale your Trust <span className="text-brand-600">Protocol</span>
+                    {t('pricing.titlePrefix')} <span className="text-brand-600">{t('pricing.titleHighlight')}</span>
                 </h1>
                 <p className="text-xl text-gray-400 font-medium max-w-2xl mx-auto">
-                    Choose the plan that fits your institution's governance and volume requirements.
+                    {t('pricing.desc')}
                 </p>
             </div>
 
