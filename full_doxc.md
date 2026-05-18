@@ -1377,13 +1377,16 @@ The deployment and continuous operation of the CertChain ecosystem demand robust
 •	Database Requirements: The central relational database requires a dedicated or managed cloud infrastructure running MySQL version 8.0 or higher. The instance requires optimized memory allocation to maintain the strict 10-connection promise pool utilized by the backend API.
 •	Blockchain Infrastructure: The system necessitates highly reliable, low-latency access to the Polygon Amoy testnet, specifically achieved through a premium RPC provider like Alchemy to ensure real-time transaction broadcasting and state querying.
 8.5 Appendix E: References (IEEE Format)
+
+A. Software, Framework, and Library Documentation
+
 [1] Meta Platforms, Inc., "React: The library for web and native user interfaces (Version 19.2.4)," React Documentation, 2024. [Online]. Available: https://react.dev/.
-[2] Meta Platforms, Inc., "React DOM: React package for working with the DOM (Version 19.2.4)," npm Registry, 2024. [Online]. Available: https://www.npmjs.com/package/react-dom.
-[3] OpenJS Foundation, "Node.js API Reference Documentation," Node.js, 2024. [Online]. Available: https://nodejs.org/en/docs/.
-[4] OpenJS Foundation, "Express 5.x - Node.js web application framework (Version 5.2.1)," Express Documentation, 2024. [Online]. Available: https://expressjs.com/.
-[5] Ethereum Foundation, "Solidity Programming Language (Version 0.8.20)," Solidity Documentation, 2024. [Online]. Available: https://soliditylang.org/.
-[6] R. Sanderson, "Ethers.js: Complete Ethereum library and wallet implementation (Version 6.16.0)," Ethers Documentation, 2024. [Online]. Available: https://docs.ethers.org/.
-[7] Oracle Corporation, "MySQL 8.0 Reference Manual," MySQL Documentation, 2024. [Online]. Available: https://dev.mysql.com/doc/refman/8.0/en/.
+[2] OpenJS Foundation, "Node.js API Reference Documentation," Node.js, 2024. [Online]. Available: https://nodejs.org/en/docs/.
+[3] OpenJS Foundation, "Express 5.x - Node.js web application framework (Version 5.2.1)," Express Documentation, 2024. [Online]. Available: https://expressjs.com/.
+[4] Ethereum Foundation, "Solidity Programming Language (Version 0.8.20)," Solidity Documentation, 2024. [Online]. Available: https://soliditylang.org/.
+[5] R. Sanderson, "Ethers.js: Complete Ethereum library and wallet implementation (Version 6.16.0)," Ethers Documentation, 2024. [Online]. Available: https://docs.ethers.org/.
+[6] Oracle Corporation, "MySQL 8.0 Reference Manual," MySQL Documentation, 2024. [Online]. Available: https://dev.mysql.com/doc/refman/8.0/en/.
+[7] NomicFoundation, "Hardhat: Ethereum development environment for compiling, testing, and deploying smart contracts (Version 2.22.0)," Hardhat Documentation, 2024. [Online]. Available: https://hardhat.org/.
 [8] Tailwind Labs, "Tailwind CSS v4.2: Rapidly build modern websites without ever leaving your HTML," Tailwind CSS Documentation, 2024. [Online]. Available: https://tailwindcss.com/docs.
 [9] Vite Contributors, "Vite: Next Generation Frontend Tooling (Version 8.0.4)," Vite Documentation, 2024. [Online]. Available: https://vitejs.dev/guide/.
 [10] Microsoft Corporation, "TypeScript: JavaScript with syntax for types (Version 6.0.2)," TypeScript Documentation, 2024. [Online]. Available: https://www.typescriptlang.org/docs/.
@@ -1408,19 +1411,36 @@ The deployment and continuous operation of the CertChain ecosystem demand robust
 [29] J. Rawlings, "jsPDF: Client-side JavaScript PDF generation library (Version 4.2.1)," jsPDF Documentation, 2024. [Online]. Available: https://www.npmjs.com/package/jspdf.
 [30] B. Kachalov, "html-to-image: Generates images from DOM nodes using SVG rendering (Version 1.11.13)," npm Registry, 2024. [Online]. Available: https://www.npmjs.com/package/html-to-image.
 [31] Fontsource Contributors, "@fontsource/outfit: Self-hosted Outfit typeface for web projects (Version 5.2.8)," npm Registry, 2024. [Online]. Available: https://fontsource.org/fonts/outfit.
-[32] NomicFoundation, "Hardhat: Ethereum development environment for compiling, testing, and deploying smart contracts (Version 2.22.0)," Hardhat Documentation, 2024. [Online]. Available: https://hardhat.org/.
-[33] NomicFoundation, "hardhat-ethers: Hardhat plugin for integration with Ethers.js (Version 3.0.0)," npm Registry, 2024. [Online]. Available: https://www.npmjs.com/package/@nomicfoundation/hardhat-ethers.
-[34] NomicFoundation, "hardhat-toolbox: Complete Hardhat development toolbox plugin bundle (Version 6.1.2)," npm Registry, 2024. [Online]. Available: https://www.npmjs.com/package/@nomicfoundation/hardhat-toolbox.
-[35] NomicFoundation, "hardhat-ignition: Declarative deployment system for Hardhat (Version 3.1.1)," npm Registry, 2024. [Online]. Available: https://www.npmjs.com/package/@nomicfoundation/hardhat-ignition.
-[36] Polygon Labs, "Polygon Amoy Testnet: Public EVM-compatible proof-of-stake test network," Polygon Documentation, 2024. [Online]. Available: https://docs.polygon.technology/.
-[37] Alchemy Inc., "Alchemy: Blockchain development platform and RPC node infrastructure," Alchemy Documentation, 2024. [Online]. Available: https://docs.alchemy.com/.
-[38] Vercel Inc., "Vercel: Frontend cloud platform for static and server-rendered applications," Vercel Documentation, 2024. [Online]. Available: https://vercel.com/docs.
-[39] Render Inc., "Render: Cloud application hosting platform for web services and databases," Render Documentation, 2024. [Online]. Available: https://docs.render.com/.
-[40] National Institute of Standards and Technology (NIST), "FIPS 180-4: Secure Hash Standard (SHA-256)," NIST Publications, 2015. [Online]. Available: https://csrc.nist.gov/publications/detail/fips/180/4/final.
-[41] N. Provos and D. Mazières, "A future-adaptable password scheme," in Proc. USENIX Annual Technical Conf., Monterey, CA, USA, 1999, pp. 81–91.
-[42] React Icons Contributors, "react-icons: SVG icon library for React with popular icon packs (Version 5.6.0)," npm Registry, 2024. [Online]. Available: https://www.npmjs.com/package/react-icons.
-[43] Ministry of Electronics and Information Technology (MeitY), "National Strategy on Blockchain," Government of India, 2021. [Online]. Available: https://www.meity.gov.in/writereaddata/files/National_Strategy_on_Blockchain.pdf.
-[44] Indian Institute of Technology Kanpur (IITK), "Prime Minister Narendra Modi launches blockchain-based digital degrees at IIT Kanpur," 2021. [Online]. Available: https://www.iitk.ac.in/new/pm-launches-blockchain-based-degrees.
-[45] Central Board of Secondary Education (CBSE), "Academic (Accreditation) Blockchain: A system for secure results," 2021. [Online]. Available: https://cbse-blockchain.nic.in/.
-[46] Polygon Labs, "Maharashtra State Board (MSBTE) issues 1 million diploma certificates via Polygon Blockchain," 2022. [Online]. Available: https://polygon.technology/blog/msbte-issues-diploma-certs-on-polygon.
+[32] React Icons Contributors, "react-icons: SVG icon library for React with popular icon packs (Version 5.6.0)," npm Registry, 2024. [Online]. Available: https://www.npmjs.com/package/react-icons.
 
+B. Indian Research Papers and Journal Articles (IEEE/Indexed)
+
+[33] R. Priyadarshini et al., "A Faster, Integrated, and Trusted Certificate Authentication and Issuer Validation System Based on Blockchain," IEEE Access, Bhubaneswar, India, 2025. DOI: 10.1109/ACCESS.2025.11076488. [Online]. Available: https://ieeexplore.ieee.org/document/11076488.
+
+[34] R. Syed Ali Fathima et al., "Blockchain-Powered Certificate Verification using SHA-256 Algorithm," 2025 7th International Conference on Intelligent Sustainable Systems (ICISS), Coimbatore, India, 2025. DOI: 10.1109/ICISS63372.2025.11076488. [Online]. Available: https://ieeexplore.ieee.org/document/11076488.
+
+[35] A. Ghosh, S. Salokhe, R. Mankame, and V. Kumar, "Blockchain Based Identity Management and Verification System for Educational Institutions," 2024 IEEE International Conference on Blockchain and Distributed Systems Security (ICBDS), Pune, India, 2024. [Online]. Available: https://ieeexplore.ieee.org/document/11377304.
+
+[36] A. S. Rajasekaran et al., "Blockchain-based Document Verification Scheme for Enhanced Security and Fraud Control," 2024 International Conference on Emerging Research in Computational Science (ICERCS), Coimbatore, India, 2024. [Online]. Available: https://ieeexplore.ieee.org/.
+
+[37] S. Narvekar, S. Patil, P. Motghare, T. Panaskar, and R. Pawar, "A Secure Framework for Academic Certificate Authentication on Ethereum Blockchain," 2025 IEEE International Conference on Blockchain and Distributed Systems Security (ICBDS), India, 2025. DOI: 10.1109/ICBDS67396.2025.11377304. [Online]. Available: https://ieeexplore.ieee.org/document/11377304.
+
+[38] A. Chowdhary, S. Agrawal, and B. Rudra, "Blockchain based Framework for Student Identity and Educational Certificate Verification," 2021 Second International Conference on Electronics and Sustainable Communication Systems (ICESC), Coimbatore, India, 2021. DOI: 10.1109/ICESC51422.2021.9532968. [Online]. Available: https://ieeexplore.ieee.org/document/9532968.
+
+[39] Sri Muthu Varshini R, Sankareswari M, Mahalakshmi G, Janani Ratthna S. G, and Kalaiselvi S., "Institutional Placement Data Management System," 2025 IEEE First International Conference on Innovations in Engineering and Next-Generation Technologies for Sustainability (ICINVENTS), India, 2025. DOI: 10.1109/ICINVENTS64613.2025.11401411. [Online]. Available: https://ieeexplore.ieee.org/document/11401411.
+
+[40] C. Achar and B. Wukkadada, "Blockchain Enabled Applications in the Education Domain and Potential Challenges," 2023 Somaiya International Conference on Technology and Information Management (SICTIM), Mumbai, India, 2023. DOI: 10.1109/SICTIM56495.2023.10105096. [Online]. Available: https://ieeexplore.ieee.org/document/10105096.
+
+C. Indian Institutional and Government References
+
+[41] Ministry of Electronics and Information Technology (MeitY), "National Strategy on Blockchain," Government of India, New Delhi, 2021. [Online]. Available: https://www.meity.gov.in/writereaddata/files/National_Strategy_on_Blockchain.pdf.
+
+[42] Indian Institute of Technology Kanpur (IITK), "Prime Minister Narendra Modi launches blockchain-based digital degrees," Kanpur, India, 2021. [Online]. Available: https://www.iitk.ac.in/new/pm-launches-blockchain-based-degrees.
+
+[43] Central Board of Secondary Education (CBSE), "Academic (Accreditation) Blockchain: Secure results system," New Delhi, India, 2021. [Online]. Available: https://cbse-blockchain.nic.in/.
+
+[44] Maharashtra State Board of Technical Education (MSBTE), "Digital Diploma Certificate Verification via Polygon Blockchain," Maharashtra, India, 2022. [Online]. Available: https://polygon.technology/blog/msbte-issues-diploma-certs-on-polygon.
+
+[45] NASSCOM Research, "Blockchain in India: Opportunities in Education and Governance," New Delhi, India, 2022. [Online]. Available: https://nasscom.in/research.
+
+[46] International Institute of Information Technology Hyderabad (IIIT-H), "Blockchain Center of Excellence — Distributed Ledger Technologies and Security Research," Hyderabad, India, 2024. [Online]. Available: https://www.iiit.ac.in/research/blockchain/.
